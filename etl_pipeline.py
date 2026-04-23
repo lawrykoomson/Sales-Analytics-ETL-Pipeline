@@ -1,13 +1,10 @@
 """
 Sales Analytics ETL Pipeline
 ==============================
-Extracts from SQLite source database, transforms and enriches
-the data, then loads into a clean PostgreSQL warehouse or CSV.
+Ingests retail sales transaction data, enriches with
+business KPIs, and loads into PostgreSQL for analytics.
 
-Pipeline Flow:
-    Extract  -> SQLite (customers, products, orders, order_items, salespersons)
-    Transform -> join tables, calculate KPIs, clean, enrich
-    Load     -> PostgreSQL warehouse or CSV fallback
+Targets: Hubtel Ghana (retail analytics)
 
 Author: Lawrence Koomson
 GitHub: github.com/lawrykoomson
@@ -15,21 +12,16 @@ GitHub: github.com/lawrykoomson
 
 import pandas as pd
 import numpy as np
-import sqlite3
 import psycopg2
 from psycopg2.extras import execute_values
 import logging
 import os
-import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from pathlib import Path
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# ─────────────────────────────────────────────
-#  LOGGING
-# ─────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
@@ -40,9 +32,6 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
-# ─────────────────────────────────────────────
-#  CONFIG
-# ─────────────────────────────────────────────
 DB_CONFIG = {
     "host":     os.getenv("DB_HOST", "localhost"),
     "port":     int(os.getenv("DB_PORT", 5432)),
@@ -51,166 +40,99 @@ DB_CONFIG = {
     "password": os.getenv("DB_PASSWORD", ""),
 }
 
-SQLITE_PATH   = Path("data/raw/sales_database.db")
 PROCESSED_PATH = Path("data/processed/")
 
-
-# ─────────────────────────────────────────────
-#  EXTRACT
-# ─────────────────────────────────────────────
-def extract() -> dict:
-    """
-    Extract all 5 tables from the SQLite source database.
-    Returns a dictionary of DataFrames keyed by table name.
-    """
-    logger.info(f"[EXTRACT] Connecting to SQLite: {SQLITE_PATH}")
-    conn = sqlite3.connect(SQLITE_PATH)
-
-    tables = {}
-    for table in ["customers", "products", "salespersons", "orders", "order_items"]:
-        tables[table] = pd.read_sql_query(f"SELECT * FROM {table}", conn)
-        logger.info(f"[EXTRACT] {table}: {len(tables[table]):,} records loaded")
-
-    conn.close()
-    logger.info("[EXTRACT] All tables extracted successfully.")
-    return tables
+CATEGORIES  = ["Electronics","Groceries","Clothing","Home & Garden","Health & Beauty","Sports","Automotive"]
+REGIONS     = ["Greater Accra","Ashanti","Western","Eastern","Northern","Volta"]
+CHANNELS    = ["In-Store","Online","Mobile App","Agent"]
+PAYMENT_METHODS = ["MoMo","Cash","Card","Bank Transfer"]
 
 
-# ─────────────────────────────────────────────
-#  TRANSFORM
-# ─────────────────────────────────────────────
-def transform(tables: dict) -> tuple:
-    """
-    Join all tables, clean data, engineer KPIs,
-    and produce the final fact table and dimension tables.
-    """
-    logger.info("[TRANSFORM] Starting transformation...")
+def extract() -> pd.DataFrame:
+    logger.info("[EXTRACT] Generating synthetic sales transaction data...")
+    np.random.seed(42)
+    n = 25000
 
-    orders    = tables["orders"].copy()
-    items     = tables["order_items"].copy()
-    customers = tables["customers"].copy()
-    products  = tables["products"].copy()
-    salesreps = tables["salespersons"].copy()
+    base_date = datetime(2024, 1, 1)
+    timestamps = [
+        base_date + timedelta(
+            days=int(np.random.randint(0, 365)),
+            hours=int(np.random.randint(6, 22)),
+            minutes=int(np.random.randint(0, 59))
+        ) for _ in range(n)
+    ]
 
-    # ── 1. Parse dates
-    orders["order_date"] = pd.to_datetime(orders["order_date"])
+    unit_prices = np.abs(np.random.lognormal(4.5, 1.0, n)).round(2)
+    quantities  = np.random.choice([1,2,3,4,5,6,7,8,9,10], n,
+                                   p=[0.35,0.25,0.15,0.10,0.06,0.04,0.02,0.01,0.01,0.01])
+    discounts   = np.random.choice([0,0,0,0.05,0.10,0.15,0.20,0.25], n,
+                                   p=[0.40,0.20,0.15,0.10,0.06,0.04,0.03,0.02])
 
-    # ── 2. Calculate line item financials
-    items["gross_revenue"] = (
-        items["unit_price"] * items["quantity"]
-    ).round(2)
-    items["discount_amount"] = (
-        items["gross_revenue"] * items["discount_pct"] / 100
-    ).round(2)
-    items["net_revenue"] = (
-        items["gross_revenue"] - items["discount_amount"]
-    ).round(2)
+    df = pd.DataFrame({
+        "transaction_id":   [f"SALE-{str(i).zfill(9)}" for i in range(1, n+1)],
+        "timestamp":        timestamps,
+        "customer_id":      [f"CUST{str(np.random.randint(1, 5001)).zfill(6)}" for _ in range(n)],
+        "product_id":       [f"PROD{str(np.random.randint(1, 501)).zfill(5)}" for _ in range(n)],
+        "product_name":     [f"Product {np.random.randint(1, 501)}" for _ in range(n)],
+        "category":         np.random.choice(CATEGORIES, n,
+                                p=[0.20,0.25,0.15,0.12,0.12,0.10,0.06]),
+        "region":           np.random.choice(REGIONS, n,
+                                p=[0.35,0.25,0.15,0.12,0.08,0.05]),
+        "channel":          np.random.choice(CHANNELS, n,
+                                p=[0.35,0.30,0.25,0.10]),
+        "payment_method":   np.random.choice(PAYMENT_METHODS, n,
+                                p=[0.45,0.25,0.20,0.10]),
+        "unit_price_ghs":   unit_prices,
+        "quantity":         quantities,
+        "discount_pct":     discounts,
+        "salesperson_id":   [f"SP{str(np.random.randint(1, 101)).zfill(4)}" for _ in range(n)],
+        "store_id":         [f"STR{str(np.random.randint(1, 51)).zfill(3)}" for _ in range(n)],
+    })
 
-    # Merge cost from products
-    items = items.merge(
-        products[["product_id", "cost_price", "category"]],
-        on="product_id", how="left"
-    )
-    items["cogs"] = (items["cost_price"] * items["quantity"]).round(2)
-    items["gross_profit"] = (items["net_revenue"] - items["cogs"]).round(2)
-    items["margin_pct"]   = np.where(
-        items["net_revenue"] > 0,
-        (items["gross_profit"] / items["net_revenue"] * 100).round(2),
-        0
-    )
+    logger.info(f"[EXTRACT] Generated {len(df):,} sales transactions.")
+    return df
 
-    # ── 3. Aggregate order items to order level
-    order_agg = items.groupby("order_id").agg(
-        total_items      = ("quantity", "sum"),
-        total_gross      = ("gross_revenue", "sum"),
-        total_discount   = ("discount_amount", "sum"),
-        total_net        = ("net_revenue", "sum"),
-        total_cogs       = ("cogs", "sum"),
-        total_profit     = ("gross_profit", "sum"),
-    ).round(2).reset_index()
 
-    # ── 4. Build master fact table
-    fact = orders.merge(order_agg,     on="order_id",     how="left")
-    fact = fact.merge(customers[["customer_id","first_name","last_name",
-                                  "region","city","gender","age"]],
-                      on="customer_id", how="left")
-    fact = fact.merge(salesreps[["salesperson_id","full_name"]],
-                      on="salesperson_id", how="left")
-    fact.rename(columns={"full_name": "salesperson_name",
-                          "region": "customer_region"}, inplace=True)
+def transform(df: pd.DataFrame) -> pd.DataFrame:
+    logger.info("[TRANSFORM] Enriching sales data with business KPIs...")
 
-    # ── 5. Time dimension engineering
-    fact["order_year"]        = fact["order_date"].dt.year
-    fact["order_month"]       = fact["order_date"].dt.month
-    fact["order_month_name"]  = fact["order_date"].dt.strftime("%B")
-    fact["order_quarter"]     = fact["order_date"].dt.quarter
-    fact["order_day_of_week"] = fact["order_date"].dt.day_name()
-    fact["order_hour"]        = fact["order_date"].dt.hour
-    fact["is_weekend"]        = fact["order_date"].dt.dayofweek >= 5
+    df["sale_date"]       = df["timestamp"].dt.date
+    df["sale_month"]      = df["timestamp"].dt.month
+    df["sale_quarter"]    = df["timestamp"].dt.quarter
+    df["sale_year"]       = df["timestamp"].dt.year
+    df["sale_hour"]       = df["timestamp"].dt.hour
+    df["day_of_week"]     = df["timestamp"].dt.day_name()
+    df["is_weekend"]      = df["timestamp"].dt.dayofweek >= 5
 
-    # ── 6. Business flags
-    fact["is_returned"]    = fact["order_status"] == "Returned"
-    fact["is_completed"]   = fact["order_status"] == "Completed"
-    fact["is_high_value"]  = fact["total_net"] >= fact["total_net"].quantile(0.90)
+    df["gross_revenue_ghs"]   = (df["unit_price_ghs"] * df["quantity"]).round(2)
+    df["discount_amount_ghs"] = (df["gross_revenue_ghs"] * df["discount_pct"]).round(2)
+    df["net_revenue_ghs"]     = (df["gross_revenue_ghs"] - df["discount_amount_ghs"]).round(2)
 
-    # ── 7. Customer age group
-    fact["age_group"] = pd.cut(
-        fact["age"],
-        bins=[0, 25, 35, 45, 55, 100],
-        labels=["18-25", "26-35", "36-45", "46-55", "55+"]
+    cost_pct = np.random.uniform(0.45, 0.70, len(df))
+    df["cost_ghs"]        = (df["net_revenue_ghs"] * cost_pct).round(2)
+    df["gross_profit_ghs"] = (df["net_revenue_ghs"] - df["cost_ghs"]).round(2)
+    df["profit_margin_pct"] = (
+        df["gross_profit_ghs"] / df["net_revenue_ghs"].replace(0, np.nan) * 100
+    ).round(2).fillna(0)
+
+    df["is_high_value"]   = df["net_revenue_ghs"] >= 500
+    df["is_discounted"]   = df["discount_pct"] > 0
+
+    df["revenue_tier"] = pd.cut(
+        df["net_revenue_ghs"],
+        bins=[-1, 50, 200, 500, 2000, float("inf")],
+        labels=["Micro (<50)","Small (50-200)","Medium (200-500)",
+                "Large (500-2k)","Premium (2k+)"]
     ).astype(str)
 
-    # ── 8. Order size tier
-    fact["order_tier"] = pd.cut(
-        fact["total_net"],
-        bins=[0, 100, 500, 1000, 5000, float("inf")],
-        labels=["Micro", "Small", "Medium", "Large", "Enterprise"]
-    ).astype(str)
+    df["processed_at"] = datetime.now()
 
-    # ── 9. Clean nulls
-    fact["total_items"]    = fact["total_items"].fillna(0).astype(int)
-    fact["total_gross"]    = fact["total_gross"].fillna(0)
-    fact["total_discount"] = fact["total_discount"].fillna(0)
-    fact["total_net"]      = fact["total_net"].fillna(0)
-    fact["total_cogs"]     = fact["total_cogs"].fillna(0)
-    fact["total_profit"]   = fact["total_profit"].fillna(0)
-    fact["processed_at"]   = datetime.now()
-
-    logger.info(f"[TRANSFORM] Fact table built: {len(fact):,} orders")
-    logger.info(f"[TRANSFORM] Total net revenue: GHS {fact['total_net'].sum():,.2f}")
-    logger.info(f"[TRANSFORM] Total gross profit: GHS {fact['total_profit'].sum():,.2f}")
-
-    # ── 10. Product performance summary
-    product_perf = items.groupby(["product_id","category"]).agg(
-        product_name    = ("product_id", "first"),
-        units_sold      = ("quantity", "sum"),
-        gross_revenue   = ("gross_revenue", "sum"),
-        net_revenue     = ("net_revenue", "sum"),
-        total_profit    = ("gross_profit", "sum"),
-        avg_margin_pct  = ("margin_pct", "mean"),
-        num_orders      = ("order_id", "nunique"),
-    ).round(2).reset_index()
-
-    product_perf = product_perf.merge(
-        products[["product_id","product_name"]], on="product_id", how="left"
-    )
-    product_perf.drop(columns=["product_name_x"], errors="ignore", inplace=True)
-    product_perf.rename(columns={"product_name_y": "product_name"}, inplace=True)
-
-    logger.info(f"[TRANSFORM] Product performance: {len(product_perf)} products analysed")
-    return fact, items, product_perf
+    logger.info(f"[TRANSFORM] Complete. Total Net Revenue: GHS {df['net_revenue_ghs'].sum():,.2f}")
+    return df
 
 
-# ─────────────────────────────────────────────
-#  LOAD
-# ─────────────────────────────────────────────
-def load(fact: pd.DataFrame, items: pd.DataFrame, product_perf: pd.DataFrame):
-    """
-    Load transformed data into PostgreSQL warehouse.
-    Falls back to CSV if database is unavailable.
-    """
+def load(df: pd.DataFrame):
     logger.info("[LOAD] Attempting PostgreSQL connection...")
-
     try:
         conn = psycopg2.connect(**DB_CONFIG)
 
@@ -218,96 +140,115 @@ def load(fact: pd.DataFrame, items: pd.DataFrame, product_perf: pd.DataFrame):
             cur.execute("""
                 CREATE SCHEMA IF NOT EXISTS sales_dw;
 
-                CREATE TABLE IF NOT EXISTS sales_dw.fact_orders (
-                    order_id            INTEGER PRIMARY KEY,
-                    customer_id         INTEGER,
-                    salesperson_id      INTEGER,
-                    order_date          TIMESTAMP,
-                    order_status        VARCHAR(20),
-                    payment_method      VARCHAR(20),
-                    delivery_region     VARCHAR(50),
-                    total_items         INTEGER,
-                    total_gross         NUMERIC(12,2),
-                    total_discount      NUMERIC(12,2),
-                    total_net           NUMERIC(12,2),
-                    total_cogs          NUMERIC(12,2),
-                    total_profit        NUMERIC(12,2),
-                    first_name          VARCHAR(50),
-                    last_name           VARCHAR(50),
-                    customer_region     VARCHAR(50),
-                    city                VARCHAR(50),
-                    gender              VARCHAR(5),
-                    age                 SMALLINT,
-                    salesperson_name    VARCHAR(100),
-                    order_year          SMALLINT,
-                    order_month         SMALLINT,
-                    order_month_name    VARCHAR(15),
-                    order_quarter       SMALLINT,
-                    order_day_of_week   VARCHAR(12),
-                    order_hour          SMALLINT,
+                CREATE TABLE IF NOT EXISTS sales_dw.fact_sales (
+                    transaction_id      VARCHAR(20) PRIMARY KEY,
+                    timestamp           TIMESTAMP,
+                    sale_date           DATE,
+                    sale_month          SMALLINT,
+                    sale_quarter        SMALLINT,
+                    sale_year           SMALLINT,
+                    sale_hour           SMALLINT,
+                    day_of_week         VARCHAR(12),
                     is_weekend          BOOLEAN,
-                    is_returned         BOOLEAN,
-                    is_completed        BOOLEAN,
+                    customer_id         VARCHAR(12),
+                    product_id          VARCHAR(10),
+                    product_name        VARCHAR(50),
+                    category            VARCHAR(30),
+                    region              VARCHAR(50),
+                    channel             VARCHAR(20),
+                    payment_method      VARCHAR(20),
+                    salesperson_id      VARCHAR(8),
+                    store_id            VARCHAR(8),
+                    unit_price_ghs      NUMERIC(12,2),
+                    quantity            SMALLINT,
+                    discount_pct        NUMERIC(5,2),
+                    gross_revenue_ghs   NUMERIC(14,2),
+                    discount_amount_ghs NUMERIC(14,2),
+                    net_revenue_ghs     NUMERIC(14,2),
+                    cost_ghs            NUMERIC(14,2),
+                    gross_profit_ghs    NUMERIC(14,2),
+                    profit_margin_pct   NUMERIC(6,2),
                     is_high_value       BOOLEAN,
-                    age_group           VARCHAR(10),
-                    order_tier          VARCHAR(15),
+                    is_discounted       BOOLEAN,
+                    revenue_tier        VARCHAR(20),
                     processed_at        TIMESTAMP
-                );
-
-                CREATE TABLE IF NOT EXISTS sales_dw.fact_order_items (
-                    item_id         INTEGER PRIMARY KEY,
-                    order_id        INTEGER,
-                    product_id      INTEGER,
-                    quantity        INTEGER,
-                    unit_price      NUMERIC(10,2),
-                    discount_pct    NUMERIC(5,2),
-                    gross_revenue   NUMERIC(12,2),
-                    discount_amount NUMERIC(10,2),
-                    net_revenue     NUMERIC(12,2),
-                    cost_price      NUMERIC(10,2),
-                    cogs            NUMERIC(12,2),
-                    gross_profit    NUMERIC(12,2),
-                    margin_pct      NUMERIC(6,2),
-                    category        VARCHAR(50)
                 );
             """)
             conn.commit()
 
-        # Load fact orders
-        fact_cols = [
-            "order_id","customer_id","salesperson_id","order_date","order_status",
-            "payment_method","delivery_region","total_items","total_gross",
-            "total_discount","total_net","total_cogs","total_profit",
-            "first_name","last_name","customer_region","city","gender","age",
-            "salesperson_name","order_year","order_month","order_month_name",
-            "order_quarter","order_day_of_week","order_hour","is_weekend",
-            "is_returned","is_completed","is_high_value","age_group",
-            "order_tier","processed_at"
+        load_cols = [
+            "transaction_id","timestamp","sale_date","sale_month","sale_quarter",
+            "sale_year","sale_hour","day_of_week","is_weekend","customer_id",
+            "product_id","product_name","category","region","channel",
+            "payment_method","salesperson_id","store_id","unit_price_ghs",
+            "quantity","discount_pct","gross_revenue_ghs","discount_amount_ghs",
+            "net_revenue_ghs","cost_ghs","gross_profit_ghs","profit_margin_pct",
+            "is_high_value","is_discounted","revenue_tier","processed_at"
         ]
-        records = [tuple(r) for r in fact[fact_cols].itertuples(index=False)]
+
+        records = [tuple(r) for r in df[load_cols].itertuples(index=False)]
+
         with conn.cursor() as cur:
             execute_values(cur,
-                f"INSERT INTO sales_dw.fact_orders ({','.join(fact_cols)}) VALUES %s "
-                f"ON CONFLICT (order_id) DO UPDATE SET "
-                f"total_net=EXCLUDED.total_net, processed_at=EXCLUDED.processed_at",
-                records, page_size=1000
+                f"INSERT INTO sales_dw.fact_sales ({','.join(load_cols)}) "
+                f"VALUES %s ON CONFLICT (transaction_id) DO UPDATE SET "
+                f"net_revenue_ghs=EXCLUDED.net_revenue_ghs, "
+                f"processed_at=EXCLUDED.processed_at",
+                records, page_size=500
             )
             conn.commit()
 
         conn.close()
-        logger.info(f"[LOAD] Loaded {len(fact):,} orders into PostgreSQL warehouse.")
+        logger.info(f"[LOAD] Successfully loaded {len(df):,} records into PostgreSQL.")
 
     except Exception as e:
         logger.warning(f"[LOAD] PostgreSQL unavailable ({e})")
-        logger.info("[LOAD] Saving to CSV fallback...")
-        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
-        fact.to_csv(PROCESSED_PATH / f"fact_orders_{ts}.csv", index=False)
-        items.to_csv(PROCESSED_PATH / f"fact_items_{ts}.csv", index=False)
-        product_perf.to_csv(PROCESSED_PATH / f"product_performance_{ts}.csv", index=False)
-        logger.info(f"[LOAD] Saved 3 CSV files to {PROCESSED_PATH}")
+        fallback = PROCESSED_PATH / f"sales_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
+        df.to_csv(fallback, index=False)
+        logger.info(f"[LOAD] Saved to {fallback}")
+
+
+def print_summary(df: pd.DataFrame):
+    print("\n" + "="*68)
+    print("   SALES ANALYTICS ETL PIPELINE — RUN SUMMARY")
+    print("="*68)
+    print(f"  Total Transactions      : {len(df):,}")
+    print(f"  Total Gross Revenue     : GHS {df['gross_revenue_ghs'].sum():,.2f}")
+    print(f"  Total Net Revenue       : GHS {df['net_revenue_ghs'].sum():,.2f}")
+    print(f"  Total Gross Profit      : GHS {df['gross_profit_ghs'].sum():,.2f}")
+    print(f"  Avg Profit Margin       : {df['profit_margin_pct'].mean():.1f}%")
+    print(f"  High Value Transactions : {df['is_high_value'].sum():,}")
+    print(f"  Discounted Transactions : {df['is_discounted'].sum():,}")
+    print("-"*68)
+    print("  REVENUE BY CATEGORY:")
+    cat_rev = df.groupby("category")["net_revenue_ghs"].sum().sort_values(ascending=False)
+    for cat, val in cat_rev.items():
+        print(f"    {cat:<20} : GHS {val:,.2f}")
+    print("-"*68)
+    print("  REVENUE BY REGION:")
+    reg_rev = df.groupby("region")["net_revenue_ghs"].sum().sort_values(ascending=False)
+    for reg, val in reg_rev.items():
+        print(f"    {reg:<20} : GHS {val:,.2f}")
+    print("-"*68)
+    print("  REVENUE BY CHANNEL:")
+    ch_rev = df.groupby("channel")["net_revenue_ghs"].sum().sort_values(ascending=False)
+    for ch, val in ch_rev.items():
+        print(f"    {ch:<20} : GHS {val:,.2f}")
+    print("="*68 + "\n")
+
+
+def run_pipeline():
+    logger.info("=" * 62)
+    logger.info("  SALES ANALYTICS ETL PIPELINE — STARTED")
+    logger.info("=" * 62)
+    start = datetime.now()
+    df    = extract()
+    df    = transform(df)
+    load(df)
+    print_summary(df)
+    duration = (datetime.now() - start).total_seconds()
+    logger.info(f"PIPELINE COMPLETED in {duration:.2f} seconds")
 
 
 if __name__ == "__main__":
-    tables = extract()
-    fact, items, product_perf = transform(tables)
-    load(fact, items, product_perf)
+    run_pipeline()

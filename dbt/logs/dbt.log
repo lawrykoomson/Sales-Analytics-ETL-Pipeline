@@ -1,0 +1,1044 @@
+[0m02:21:44.460805 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000281D2F33DD0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000281D2F33F50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000281D2F30910>]}
+
+
+============================== 02:21:44.593034 | 941d215e-fd4d-468f-a31c-774a437624a2 ==============================
+[0m02:21:44.593034 [info ] [MainThread]: Running with dbt=1.11.8
+[0m02:21:44.595042 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'empty': 'None', 'log_cache_events': 'False', 'introspect': 'True', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'profiles_dir': '.', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt debug --profiles-dir .', 'use_colors': 'True', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\DELL\\Documents\\Sales-Analytics-ETL-Pipeline\\dbt\\logs'}
+[0m02:21:44.939652 [info ] [MainThread]: dbt version: 1.11.8
+[0m02:21:44.940653 [info ] [MainThread]: python version: 3.11.9
+[0m02:21:44.941657 [info ] [MainThread]: python path: C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\venv\Scripts\python.exe
+[0m02:21:44.942654 [info ] [MainThread]: os info: Windows-10-10.0.26200-SP0
+[0m02:21:45.163890 [info ] [MainThread]: Using profiles dir at .
+[0m02:21:45.164916 [info ] [MainThread]: Using profiles.yml file at .\profiles.yml
+[0m02:21:45.165892 [info ] [MainThread]: Using dbt_project.yml file at C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\dbt_project.yml
+[0m02:21:45.175343 [info ] [MainThread]: adapter type: postgres
+[0m02:21:45.176349 [info ] [MainThread]: adapter version: 1.10.0
+[0m02:21:45.307231 [info ] [MainThread]: Configuration:
+[0m02:21:45.308225 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m02:21:45.309226 [info ] [MainThread]:   dbt_project.yml file [[32mOK found and valid[0m]
+[0m02:21:45.310226 [info ] [MainThread]: Required dependencies:
+[0m02:21:45.311226 [debug] [MainThread]: Executing "git --help"
+[0m02:21:46.254342 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m02:21:46.255373 [debug] [MainThread]: STDERR: "b''"
+[0m02:21:46.256336 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m02:21:46.256336 [info ] [MainThread]: Connection:
+[0m02:21:46.257690 [info ] [MainThread]:   host: localhost
+[0m02:21:46.258700 [info ] [MainThread]:   port: 5432
+[0m02:21:46.258700 [info ] [MainThread]:   user: postgres
+[0m02:21:46.259699 [info ] [MainThread]:   database: sales_warehouse
+[0m02:21:46.260696 [info ] [MainThread]:   schema: sales_dw
+[0m02:21:46.261697 [info ] [MainThread]:   connect_timeout: 10
+[0m02:21:46.261697 [info ] [MainThread]:   role: None
+[0m02:21:46.263704 [info ] [MainThread]:   search_path: None
+[0m02:21:46.264703 [info ] [MainThread]:   keepalives_idle: 0
+[0m02:21:46.266705 [info ] [MainThread]:   sslmode: None
+[0m02:21:46.267698 [info ] [MainThread]:   sslcert: None
+[0m02:21:46.268698 [info ] [MainThread]:   sslkey: None
+[0m02:21:46.269706 [info ] [MainThread]:   sslrootcert: None
+[0m02:21:46.270700 [info ] [MainThread]:   application_name: dbt
+[0m02:21:46.272700 [info ] [MainThread]:   retries: 1
+[0m02:21:46.273734 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m02:21:46.844525 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m02:21:47.503207 [debug] [MainThread]: Using postgres connection "debug"
+[0m02:21:47.504188 [debug] [MainThread]: On debug: select 1 as id
+[0m02:21:47.505190 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m02:21:48.731755 [debug] [MainThread]: SQL status: SELECT 1 in 1.227 seconds
+[0m02:21:48.732839 [debug] [MainThread]: On debug: Close
+[0m02:21:48.734043 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m02:21:48.735002 [info ] [MainThread]: [32mAll checks passed![0m
+[0m02:21:48.736004 [debug] [MainThread]: Command `dbt debug` succeeded at 02:21:48.736004 after 5.46 seconds
+[0m02:21:48.737005 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m02:21:48.738005 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000281D3F7A510>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000281CC121010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x00000281D3F33BD0>]}
+[0m02:21:48.738005 [debug] [MainThread]: Flushing usage events
+[0m02:21:51.649521 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m02:22:25.347913 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C7B53F50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C7B51390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C7B538D0>]}
+
+
+============================== 02:22:25.351951 | 1990fb32-bee2-4feb-abae-92b0bdea1ac8 ==============================
+[0m02:22:25.351951 [info ] [MainThread]: Running with dbt=1.11.8
+[0m02:22:25.352952 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'False', 'cache_selected_only': 'False', 'log_format': 'default', 'debug': 'False', 'fail_fast': 'False', 'partial_parse': 'True', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'profiles_dir': '.', 'indirect_selection': 'eager', 'use_colors': 'True', 'invocation_command': 'dbt run --profiles-dir .', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\DELL\\Documents\\Sales-Analytics-ETL-Pipeline\\dbt\\logs'}
+[0m02:22:27.296962 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8D4BE90>]}
+[0m02:22:27.370006 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C42B1190>]}
+[0m02:22:27.371010 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m02:22:28.518765 [debug] [MainThread]: checksum: 7d524ac048c2100769df89d592e662e060a73ca564e31bd9c2a37efdfe8d8ab6, vars: {}, profile: , target: , version: 1.11.8
+[0m02:22:28.520769 [info ] [MainThread]: Unable to do partial parsing because saved manifest not found. Starting full parse.
+[0m02:22:28.521729 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'partial_parser', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8FF37D0>]}
+[0m02:22:31.295674 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8BEE750>]}
+[0m02:22:31.422268 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\manifest.json
+[0m02:22:31.501326 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\semantic_manifest.json
+[0m02:22:31.578031 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8BEE750>]}
+[0m02:22:31.579312 [info ] [MainThread]: Found 5 models, 4 data tests, 1 source, 465 macros
+[0m02:22:31.580275 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8E41850>]}
+[0m02:22:31.582275 [info ] [MainThread]: 
+[0m02:22:31.583020 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m02:22:31.584030 [info ] [MainThread]: 
+[0m02:22:31.585028 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m02:22:31.591028 [debug] [ThreadPool]: Acquiring new postgres connection 'list_sales_warehouse'
+[0m02:22:31.593030 [debug] [ThreadPool]: Acquiring new postgres connection 'list_sales_warehouse'
+[0m02:22:31.724521 [debug] [ThreadPool]: Using postgres connection "list_sales_warehouse"
+[0m02:22:31.725512 [debug] [ThreadPool]: Using postgres connection "list_sales_warehouse"
+[0m02:22:31.726517 [debug] [ThreadPool]: On list_sales_warehouse: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "list_sales_warehouse"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m02:22:31.727516 [debug] [ThreadPool]: On list_sales_warehouse: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "list_sales_warehouse"} */
+
+    select distinct nspname from pg_namespace
+  
+[0m02:22:31.728514 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m02:22:31.729508 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m02:22:31.869685 [debug] [ThreadPool]: SQL status: SELECT 5 in 0.140 seconds
+[0m02:22:31.870690 [debug] [ThreadPool]: SQL status: SELECT 5 in 0.142 seconds
+[0m02:22:31.871687 [debug] [ThreadPool]: On list_sales_warehouse: Close
+[0m02:22:31.873689 [debug] [ThreadPool]: On list_sales_warehouse: Close
+[0m02:22:31.876280 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_sales_warehouse, now create_sales_warehouse_sales_dw_marts)
+[0m02:22:31.878363 [debug] [ThreadPool]: Re-using an available connection from the pool (formerly list_sales_warehouse, now create_sales_warehouse_sales_dw_staging)
+[0m02:22:31.879362 [debug] [ThreadPool]: Creating schema "database: "sales_warehouse"
+schema: "sales_dw_marts"
+"
+[0m02:22:31.881359 [debug] [ThreadPool]: Creating schema "database: "sales_warehouse"
+schema: "sales_dw_staging"
+"
+[0m02:22:31.888361 [debug] [ThreadPool]: Using postgres connection "create_sales_warehouse_sales_dw_marts"
+[0m02:22:31.957842 [debug] [ThreadPool]: Using postgres connection "create_sales_warehouse_sales_dw_staging"
+[0m02:22:31.958807 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_marts: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "create_sales_warehouse_sales_dw_marts"} */
+create schema if not exists "sales_dw_marts"
+[0m02:22:31.960808 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_staging: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "create_sales_warehouse_sales_dw_staging"} */
+create schema if not exists "sales_dw_staging"
+[0m02:22:31.961954 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m02:22:31.962961 [debug] [ThreadPool]: Opening a new connection, currently in state closed
+[0m02:22:33.131387 [debug] [ThreadPool]: SQL status: CREATE SCHEMA in 1.168 seconds
+[0m02:22:33.132388 [debug] [ThreadPool]: SQL status: CREATE SCHEMA in 1.171 seconds
+[0m02:22:33.135418 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_staging: COMMIT
+[0m02:22:33.138387 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_marts: COMMIT
+[0m02:22:33.139388 [debug] [ThreadPool]: Using postgres connection "create_sales_warehouse_sales_dw_staging"
+[0m02:22:33.141386 [debug] [ThreadPool]: Using postgres connection "create_sales_warehouse_sales_dw_marts"
+[0m02:22:33.142388 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_staging: COMMIT
+[0m02:22:33.143721 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_marts: COMMIT
+[0m02:22:33.147519 [debug] [ThreadPool]: SQL status: COMMIT in 0.001 seconds
+[0m02:22:33.148522 [debug] [ThreadPool]: SQL status: COMMIT in 0.002 seconds
+[0m02:22:33.149536 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_staging: Close
+[0m02:22:33.150520 [debug] [ThreadPool]: On create_sales_warehouse_sales_dw_marts: Close
+[0m02:22:33.166059 [debug] [ThreadPool]: Acquiring new postgres connection 'list_sales_warehouse_sales_dw_marts'
+[0m02:22:33.189028 [debug] [ThreadPool]: Using postgres connection "list_sales_warehouse_sales_dw_marts"
+[0m02:22:33.192235 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_marts: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "list_sales_warehouse_sales_dw_marts"} */
+select
+      'sales_warehouse' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'sales_dw_marts'
+    union all
+    select
+      'sales_warehouse' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'sales_dw_marts'
+    union all
+    select
+      'sales_warehouse' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'sales_dw_marts'
+  
+[0m02:22:33.190550 [debug] [ThreadPool]: Acquiring new postgres connection 'list_sales_warehouse_sales_dw_staging'
+[0m02:22:33.194767 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m02:22:33.201915 [debug] [ThreadPool]: Using postgres connection "list_sales_warehouse_sales_dw_staging"
+[0m02:22:33.204461 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_staging: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "list_sales_warehouse_sales_dw_staging"} */
+select
+      'sales_warehouse' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'sales_dw_staging'
+    union all
+    select
+      'sales_warehouse' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'sales_dw_staging'
+    union all
+    select
+      'sales_warehouse' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'sales_dw_staging'
+  
+[0m02:22:33.205973 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m02:22:34.436485 [debug] [ThreadPool]: SQL status: SELECT 0 in 1.231 seconds
+[0m02:22:34.437528 [debug] [ThreadPool]: SQL status: SELECT 0 in 1.243 seconds
+[0m02:22:34.438492 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_staging: ROLLBACK
+[0m02:22:34.439493 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_marts: ROLLBACK
+[0m02:22:34.440530 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_staging: Close
+[0m02:22:34.441494 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_marts: Close
+[0m02:22:34.449722 [debug] [MainThread]: Using postgres connection "master"
+[0m02:22:34.454110 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m02:22:34.455102 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m02:22:34.678564 [debug] [MainThread]: SQL status: SELECT 0 in 0.223 seconds
+[0m02:22:34.680722 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C966F3D0>]}
+[0m02:22:34.681718 [debug] [MainThread]: On master: ROLLBACK
+[0m02:22:34.682716 [debug] [MainThread]: On master: COMMIT
+[0m02:22:34.683678 [debug] [MainThread]: Using postgres connection "master"
+[0m02:22:34.684720 [debug] [MainThread]: On master: COMMIT
+[0m02:22:34.686676 [debug] [MainThread]: SQL status: COMMIT in 0.001 seconds
+[0m02:22:34.687718 [debug] [MainThread]: On master: Close
+[0m02:22:34.721322 [debug] [Thread-1 (]: Began running node model.sales_analytics.stg_sales
+[0m02:22:34.722363 [info ] [Thread-1 (]: 1 of 5 START sql view model sales_dw_staging.stg_sales ......................... [RUN]
+[0m02:22:34.723322 [debug] [Thread-1 (]: Acquiring new postgres connection 'model.sales_analytics.stg_sales'
+[0m02:22:34.724363 [debug] [Thread-1 (]: Began compiling node model.sales_analytics.stg_sales
+[0m02:22:34.732832 [debug] [Thread-1 (]: Writing injected SQL for node "model.sales_analytics.stg_sales"
+[0m02:22:34.735795 [debug] [Thread-1 (]: Began executing node model.sales_analytics.stg_sales
+[0m02:22:34.776629 [debug] [Thread-1 (]: Writing runtime sql for node "model.sales_analytics.stg_sales"
+[0m02:22:34.782203 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.stg_sales"
+[0m02:22:34.783202 [debug] [Thread-1 (]: On model.sales_analytics.stg_sales: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.stg_sales"} */
+
+  create view "sales_warehouse"."sales_dw_staging"."stg_sales__dbt_tmp"
+    
+    
+  as (
+    /*
+  Staging Model: stg_sales
+  ==========================
+  Cleans and standardises raw sales fact table.
+  Single source of truth for all downstream sales models.
+
+  Source: sales_dw.fact_sales
+  Author: Lawrence Koomson
+*/
+
+with source as (
+
+    select * from "sales_warehouse"."sales_dw"."fact_sales"
+
+),
+
+staged as (
+
+    select
+        transaction_id,
+        timestamp                                       as transaction_timestamp,
+        sale_date,
+        sale_month,
+        sale_quarter,
+        sale_year,
+        sale_hour,
+        day_of_week,
+        is_weekend,
+
+        upper(trim(customer_id))                        as customer_id,
+        upper(trim(product_id))                         as product_id,
+        initcap(trim(product_name))                     as product_name,
+        initcap(trim(category))                         as category,
+        initcap(trim(region))                           as region,
+        initcap(trim(channel))                          as channel,
+        initcap(trim(payment_method))                   as payment_method,
+        upper(trim(salesperson_id))                     as salesperson_id,
+        upper(trim(store_id))                           as store_id,
+
+        unit_price_ghs,
+        quantity,
+        discount_pct,
+        gross_revenue_ghs,
+        discount_amount_ghs,
+        net_revenue_ghs,
+        cost_ghs,
+        gross_profit_ghs,
+        profit_margin_pct,
+
+        is_high_value,
+        is_discounted,
+        revenue_tier,
+        processed_at,
+
+        case
+            when sale_month in (1,2,3)   then 'Q1'
+            when sale_month in (4,5,6)   then 'Q2'
+            when sale_month in (7,8,9)   then 'Q3'
+            else 'Q4'
+        end                                             as quarter_label,
+
+        case
+            when sale_hour between 6  and 11 then 'Morning (6-12)'
+            when sale_hour between 12 and 16 then 'Afternoon (12-17)'
+            when sale_hour between 17 and 20 then 'Evening (17-21)'
+            else 'Night (21+)'
+        end                                             as time_of_day
+
+    from source
+    where
+        transaction_id is not null
+        and net_revenue_ghs > 0
+
+)
+
+select * from staged
+  );
+[0m02:22:34.784205 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m02:22:35.973233 [debug] [Thread-1 (]: SQL status: CREATE VIEW in 1.189 seconds
+[0m02:22:35.981250 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.stg_sales"
+[0m02:22:35.982251 [debug] [Thread-1 (]: On model.sales_analytics.stg_sales: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.stg_sales"} */
+alter table "sales_warehouse"."sales_dw_staging"."stg_sales__dbt_tmp" rename to "stg_sales"
+[0m02:22:35.991508 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.008 seconds
+[0m02:22:36.009364 [debug] [Thread-1 (]: On model.sales_analytics.stg_sales: COMMIT
+[0m02:22:36.010370 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.stg_sales"
+[0m02:22:36.011361 [debug] [Thread-1 (]: On model.sales_analytics.stg_sales: COMMIT
+[0m02:22:36.013362 [debug] [Thread-1 (]: SQL status: COMMIT in 0.001 seconds
+[0m02:22:36.022399 [debug] [Thread-1 (]: Applying DROP to: "sales_warehouse"."sales_dw_staging"."stg_sales__dbt_backup"
+[0m02:22:36.028749 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.stg_sales"
+[0m02:22:36.029783 [debug] [Thread-1 (]: On model.sales_analytics.stg_sales: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.stg_sales"} */
+drop view if exists "sales_warehouse"."sales_dw_staging"."stg_sales__dbt_backup" cascade
+[0m02:22:36.033425 [debug] [Thread-1 (]: SQL status: DROP VIEW in 0.003 seconds
+[0m02:22:36.036434 [debug] [Thread-1 (]: On model.sales_analytics.stg_sales: Close
+[0m02:22:36.049149 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C9306550>]}
+[0m02:22:36.050187 [info ] [Thread-1 (]: 1 of 5 OK created sql view model sales_dw_staging.stg_sales .................... [[32mCREATE VIEW[0m in 1.31s]
+[0m02:22:36.052151 [debug] [Thread-1 (]: Finished running node model.sales_analytics.stg_sales
+[0m02:22:36.053519 [debug] [Thread-3 (]: Began running node model.sales_analytics.mart_monthly_revenue
+[0m02:22:36.054576 [debug] [Thread-4 (]: Began running node model.sales_analytics.mart_sales_by_category
+[0m02:22:36.055533 [debug] [Thread-2 (]: Began running node model.sales_analytics.mart_sales_by_channel
+[0m02:22:36.056534 [debug] [Thread-1 (]: Began running node model.sales_analytics.mart_sales_by_region
+[0m02:22:36.055533 [info ] [Thread-3 (]: 2 of 5 START sql table model sales_dw_marts.mart_monthly_revenue ............... [RUN]
+[0m02:22:36.057531 [info ] [Thread-4 (]: 3 of 5 START sql table model sales_dw_marts.mart_sales_by_category ............. [RUN]
+[0m02:22:36.058530 [info ] [Thread-2 (]: 4 of 5 START sql table model sales_dw_marts.mart_sales_by_channel .............. [RUN]
+[0m02:22:36.060534 [info ] [Thread-1 (]: 5 of 5 START sql table model sales_dw_marts.mart_sales_by_region ............... [RUN]
+[0m02:22:36.061534 [debug] [Thread-3 (]: Acquiring new postgres connection 'model.sales_analytics.mart_monthly_revenue'
+[0m02:22:36.062534 [debug] [Thread-4 (]: Acquiring new postgres connection 'model.sales_analytics.mart_sales_by_category'
+[0m02:22:36.063533 [debug] [Thread-2 (]: Acquiring new postgres connection 'model.sales_analytics.mart_sales_by_channel'
+[0m02:22:36.064536 [debug] [Thread-1 (]: Re-using an available connection from the pool (formerly model.sales_analytics.stg_sales, now model.sales_analytics.mart_sales_by_region)
+[0m02:22:36.065534 [debug] [Thread-3 (]: Began compiling node model.sales_analytics.mart_monthly_revenue
+[0m02:22:36.066625 [debug] [Thread-4 (]: Began compiling node model.sales_analytics.mart_sales_by_category
+[0m02:22:36.067637 [debug] [Thread-2 (]: Began compiling node model.sales_analytics.mart_sales_by_channel
+[0m02:22:36.069684 [debug] [Thread-1 (]: Began compiling node model.sales_analytics.mart_sales_by_region
+[0m02:22:36.073636 [debug] [Thread-3 (]: Writing injected SQL for node "model.sales_analytics.mart_monthly_revenue"
+[0m02:22:36.078638 [debug] [Thread-4 (]: Writing injected SQL for node "model.sales_analytics.mart_sales_by_category"
+[0m02:22:36.082677 [debug] [Thread-2 (]: Writing injected SQL for node "model.sales_analytics.mart_sales_by_channel"
+[0m02:22:36.086669 [debug] [Thread-1 (]: Writing injected SQL for node "model.sales_analytics.mart_sales_by_region"
+[0m02:22:36.218669 [debug] [Thread-4 (]: Began executing node model.sales_analytics.mart_sales_by_category
+[0m02:22:36.219734 [debug] [Thread-3 (]: Began executing node model.sales_analytics.mart_monthly_revenue
+[0m02:22:36.228373 [debug] [Thread-2 (]: Began executing node model.sales_analytics.mart_sales_by_channel
+[0m02:22:36.257363 [debug] [Thread-4 (]: Writing runtime sql for node "model.sales_analytics.mart_sales_by_category"
+[0m02:22:36.259244 [debug] [Thread-1 (]: Began executing node model.sales_analytics.mart_sales_by_region
+[0m02:22:36.264003 [debug] [Thread-3 (]: Writing runtime sql for node "model.sales_analytics.mart_monthly_revenue"
+[0m02:22:36.267966 [debug] [Thread-2 (]: Writing runtime sql for node "model.sales_analytics.mart_sales_by_channel"
+[0m02:22:36.271614 [debug] [Thread-1 (]: Writing runtime sql for node "model.sales_analytics.mart_sales_by_region"
+[0m02:22:36.273573 [debug] [Thread-4 (]: Using postgres connection "model.sales_analytics.mart_sales_by_category"
+[0m02:22:36.274576 [debug] [Thread-3 (]: Using postgres connection "model.sales_analytics.mart_monthly_revenue"
+[0m02:22:36.275929 [debug] [Thread-2 (]: Using postgres connection "model.sales_analytics.mart_sales_by_channel"
+[0m02:22:36.276281 [debug] [Thread-4 (]: On model.sales_analytics.mart_sales_by_category: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_category"} */
+
+  
+    
+
+  create  table "sales_warehouse"."sales_dw_marts"."mart_sales_by_category__dbt_tmp"
+  
+  
+    as
+  
+  (
+    /*
+  Mart Model: mart_sales_by_category
+  ====================================
+  Aggregates sales KPIs by product category.
+  Powers category performance in Power BI.
+
+  Author: Lawrence Koomson
+*/
+
+with staged as (
+
+    select * from "sales_warehouse"."sales_dw_staging"."stg_sales"
+
+),
+
+category_sales as (
+
+    select
+        category,
+
+        count(transaction_id)                           as total_transactions,
+        count(distinct customer_id)                     as unique_customers,
+        count(distinct product_id)                      as unique_products,
+        sum(quantity)                                   as total_units_sold,
+
+        round(sum(gross_revenue_ghs), 2)                as total_gross_revenue_ghs,
+        round(sum(discount_amount_ghs), 2)              as total_discounts_ghs,
+        round(sum(net_revenue_ghs), 2)                  as total_net_revenue_ghs,
+        round(sum(gross_profit_ghs), 2)                 as total_gross_profit_ghs,
+        round(avg(profit_margin_pct), 2)                as avg_profit_margin_pct,
+        round(avg(net_revenue_ghs), 2)                  as avg_transaction_value_ghs,
+        round(avg(unit_price_ghs), 2)                   as avg_unit_price_ghs,
+
+        count(case when is_high_value then 1 end)       as high_value_transactions,
+        count(case when is_discounted then 1 end)       as discounted_transactions,
+
+        round(
+            sum(net_revenue_ghs)
+            / sum(sum(net_revenue_ghs)) over () * 100
+        , 2)                                            as revenue_share_pct
+
+    from staged
+    group by category
+
+)
+
+select * from category_sales
+order by total_net_revenue_ghs desc
+  );
+  
+[0m02:22:36.277659 [debug] [Thread-3 (]: On model.sales_analytics.mart_monthly_revenue: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_monthly_revenue"} */
+
+  
+    
+
+  create  table "sales_warehouse"."sales_dw_marts"."mart_monthly_revenue__dbt_tmp"
+  
+  
+    as
+  
+  (
+    /*
+  Mart Model: mart_monthly_revenue
+  ==================================
+  Aggregates sales revenue by month.
+  Powers revenue trend charts in Power BI.
+
+  Author: Lawrence Koomson
+*/
+
+with staged as (
+
+    select * from "sales_warehouse"."sales_dw_staging"."stg_sales"
+
+),
+
+monthly as (
+
+    select
+        sale_year,
+        sale_month,
+        quarter_label,
+
+        to_char(to_date(sale_month::text, 'MM'), 'Month') as month_name,
+
+        count(transaction_id)                           as total_transactions,
+        count(distinct customer_id)                     as unique_customers,
+        sum(quantity)                                   as total_units_sold,
+
+        round(sum(gross_revenue_ghs), 2)                as total_gross_revenue_ghs,
+        round(sum(discount_amount_ghs), 2)              as total_discounts_ghs,
+        round(sum(net_revenue_ghs), 2)                  as total_net_revenue_ghs,
+        round(sum(gross_profit_ghs), 2)                 as total_gross_profit_ghs,
+        round(avg(profit_margin_pct), 2)                as avg_profit_margin_pct,
+        round(avg(net_revenue_ghs), 2)                  as avg_transaction_value_ghs,
+
+        count(case when is_weekend then 1 end)          as weekend_transactions,
+        count(case when is_high_value then 1 end)       as high_value_transactions,
+        count(case when is_discounted then 1 end)       as discounted_transactions,
+
+        round(
+            sum(net_revenue_ghs)
+            / sum(sum(net_revenue_ghs)) over () * 100
+        , 2)                                            as revenue_share_pct
+
+    from staged
+    group by sale_year, sale_month, quarter_label
+
+)
+
+select * from monthly
+order by sale_year, sale_month
+  );
+  
+[0m02:22:36.278657 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.mart_sales_by_region"
+[0m02:22:36.278657 [debug] [Thread-2 (]: On model.sales_analytics.mart_sales_by_channel: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_channel"} */
+
+  
+    
+
+  create  table "sales_warehouse"."sales_dw_marts"."mart_sales_by_channel__dbt_tmp"
+  
+  
+    as
+  
+  (
+    /*
+  Mart Model: mart_sales_by_channel
+  ===================================
+  Aggregates sales KPIs by sales channel.
+  Powers channel performance in Power BI.
+
+  Author: Lawrence Koomson
+*/
+
+with staged as (
+
+    select * from "sales_warehouse"."sales_dw_staging"."stg_sales"
+
+),
+
+channel_sales as (
+
+    select
+        channel,
+
+        count(transaction_id)                           as total_transactions,
+        count(distinct customer_id)                     as unique_customers,
+        sum(quantity)                                   as total_units_sold,
+
+        round(sum(net_revenue_ghs), 2)                  as total_net_revenue_ghs,
+        round(sum(gross_profit_ghs), 2)                 as total_gross_profit_ghs,
+        round(avg(profit_margin_pct), 2)                as avg_profit_margin_pct,
+        round(avg(net_revenue_ghs), 2)                  as avg_transaction_value_ghs,
+
+        count(case when payment_method = 'MoMo'
+                   then 1 end)                          as momo_payments,
+        count(case when payment_method = 'Cash'
+                   then 1 end)                          as cash_payments,
+        count(case when payment_method = 'Card'
+                   then 1 end)                          as card_payments,
+
+        count(case when is_high_value then 1 end)       as high_value_transactions,
+        count(case when is_discounted then 1 end)       as discounted_transactions,
+        count(case when is_weekend then 1 end)          as weekend_transactions,
+
+        round(
+            sum(net_revenue_ghs)
+            / sum(sum(net_revenue_ghs)) over () * 100
+        , 2)                                            as revenue_share_pct
+
+    from staged
+    group by channel
+
+)
+
+select * from channel_sales
+order by total_net_revenue_ghs desc
+  );
+  
+[0m02:22:36.279657 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m02:22:36.280568 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m02:22:36.281236 [debug] [Thread-1 (]: On model.sales_analytics.mart_sales_by_region: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_region"} */
+
+  
+    
+
+  create  table "sales_warehouse"."sales_dw_marts"."mart_sales_by_region__dbt_tmp"
+  
+  
+    as
+  
+  (
+    /*
+  Mart Model: mart_sales_by_region
+  ==================================
+  Aggregates sales KPIs by Ghana region.
+  Powers regional revenue map in Power BI.
+
+  Author: Lawrence Koomson
+*/
+
+with staged as (
+
+    select * from "sales_warehouse"."sales_dw_staging"."stg_sales"
+
+),
+
+region_sales as (
+
+    select
+        region,
+
+        count(transaction_id)                           as total_transactions,
+        count(distinct customer_id)                     as unique_customers,
+        sum(quantity)                                   as total_units_sold,
+
+        round(sum(net_revenue_ghs), 2)                  as total_net_revenue_ghs,
+        round(sum(gross_profit_ghs), 2)                 as total_gross_profit_ghs,
+        round(avg(profit_margin_pct), 2)                as avg_profit_margin_pct,
+        round(avg(net_revenue_ghs), 2)                  as avg_transaction_value_ghs,
+        round(sum(discount_amount_ghs), 2)              as total_discounts_ghs,
+
+        count(case when is_high_value then 1 end)       as high_value_transactions,
+        count(case when channel = 'Mobile App'
+                   then 1 end)                          as mobile_transactions,
+
+        round(
+            sum(net_revenue_ghs)
+            / sum(sum(net_revenue_ghs)) over () * 100
+        , 2)                                            as revenue_share_pct
+
+    from staged
+    group by region
+
+)
+
+select * from region_sales
+order by total_net_revenue_ghs desc
+  );
+  
+[0m02:22:36.282020 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m02:22:36.283063 [debug] [Thread-1 (]: Opening a new connection, currently in state closed
+[0m02:22:37.821201 [debug] [Thread-1 (]: SQL status: SELECT 6 in 1.538 seconds
+[0m02:22:37.835598 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.mart_sales_by_region"
+[0m02:22:37.836599 [debug] [Thread-2 (]: SQL status: SELECT 4 in 1.555 seconds
+[0m02:22:37.836599 [debug] [Thread-3 (]: SQL status: SELECT 12 in 1.557 seconds
+[0m02:22:37.837599 [debug] [Thread-1 (]: On model.sales_analytics.mart_sales_by_region: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_region"} */
+alter table "sales_warehouse"."sales_dw_marts"."mart_sales_by_region__dbt_tmp" rename to "mart_sales_by_region"
+[0m02:22:37.842238 [debug] [Thread-2 (]: Using postgres connection "model.sales_analytics.mart_sales_by_channel"
+[0m02:22:37.845793 [debug] [Thread-3 (]: Using postgres connection "model.sales_analytics.mart_monthly_revenue"
+[0m02:22:37.847758 [debug] [Thread-2 (]: On model.sales_analytics.mart_sales_by_channel: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_channel"} */
+alter table "sales_warehouse"."sales_dw_marts"."mart_sales_by_channel__dbt_tmp" rename to "mart_sales_by_channel"
+[0m02:22:37.847758 [debug] [Thread-1 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m02:22:37.848758 [debug] [Thread-3 (]: On model.sales_analytics.mart_monthly_revenue: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_monthly_revenue"} */
+alter table "sales_warehouse"."sales_dw_marts"."mart_monthly_revenue__dbt_tmp" rename to "mart_monthly_revenue"
+[0m02:22:37.851793 [debug] [Thread-1 (]: On model.sales_analytics.mart_sales_by_region: COMMIT
+[0m02:22:37.851793 [debug] [Thread-2 (]: SQL status: ALTER TABLE in 0.002 seconds
+[0m02:22:37.852759 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.mart_sales_by_region"
+[0m02:22:37.853760 [debug] [Thread-3 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m02:22:37.854758 [debug] [Thread-2 (]: On model.sales_analytics.mart_sales_by_channel: COMMIT
+[0m02:22:37.855758 [debug] [Thread-1 (]: On model.sales_analytics.mart_sales_by_region: COMMIT
+[0m02:22:37.857796 [debug] [Thread-3 (]: On model.sales_analytics.mart_monthly_revenue: COMMIT
+[0m02:22:37.857796 [debug] [Thread-2 (]: Using postgres connection "model.sales_analytics.mart_sales_by_channel"
+[0m02:22:37.859635 [debug] [Thread-3 (]: Using postgres connection "model.sales_analytics.mart_monthly_revenue"
+[0m02:22:37.860662 [debug] [Thread-1 (]: SQL status: COMMIT in 0.001 seconds
+[0m02:22:37.860662 [debug] [Thread-2 (]: On model.sales_analytics.mart_sales_by_channel: COMMIT
+[0m02:22:37.861669 [debug] [Thread-3 (]: On model.sales_analytics.mart_monthly_revenue: COMMIT
+[0m02:22:37.864706 [debug] [Thread-1 (]: Applying DROP to: "sales_warehouse"."sales_dw_marts"."mart_sales_by_region__dbt_backup"
+[0m02:22:37.868669 [debug] [Thread-1 (]: Using postgres connection "model.sales_analytics.mart_sales_by_region"
+[0m02:22:37.869669 [debug] [Thread-2 (]: SQL status: COMMIT in 0.004 seconds
+[0m02:22:37.869669 [debug] [Thread-4 (]: SQL status: SELECT 7 in 1.590 seconds
+[0m02:22:37.870707 [debug] [Thread-3 (]: SQL status: COMMIT in 0.005 seconds
+[0m02:22:37.870707 [debug] [Thread-1 (]: On model.sales_analytics.mart_sales_by_region: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_region"} */
+drop table if exists "sales_warehouse"."sales_dw_marts"."mart_sales_by_region__dbt_backup" cascade
+[0m02:22:37.873668 [debug] [Thread-2 (]: Applying DROP to: "sales_warehouse"."sales_dw_marts"."mart_sales_by_channel__dbt_backup"
+[0m02:22:37.878284 [debug] [Thread-4 (]: Using postgres connection "model.sales_analytics.mart_sales_by_category"
+[0m02:22:37.881289 [debug] [Thread-3 (]: Applying DROP to: "sales_warehouse"."sales_dw_marts"."mart_monthly_revenue__dbt_backup"
+[0m02:22:37.882247 [debug] [Thread-2 (]: Using postgres connection "model.sales_analytics.mart_sales_by_channel"
+[0m02:22:37.883491 [debug] [Thread-1 (]: SQL status: DROP TABLE in 0.001 seconds
+[0m02:22:37.883491 [debug] [Thread-4 (]: On model.sales_analytics.mart_sales_by_category: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_category"} */
+alter table "sales_warehouse"."sales_dw_marts"."mart_sales_by_category__dbt_tmp" rename to "mart_sales_by_category"
+[0m02:22:37.884655 [debug] [Thread-3 (]: Using postgres connection "model.sales_analytics.mart_monthly_revenue"
+[0m02:22:37.885736 [debug] [Thread-2 (]: On model.sales_analytics.mart_sales_by_channel: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_channel"} */
+drop table if exists "sales_warehouse"."sales_dw_marts"."mart_sales_by_channel__dbt_backup" cascade
+[0m02:22:37.887405 [debug] [Thread-1 (]: On model.sales_analytics.mart_sales_by_region: Close
+[0m02:22:37.888418 [debug] [Thread-3 (]: On model.sales_analytics.mart_monthly_revenue: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_monthly_revenue"} */
+drop table if exists "sales_warehouse"."sales_dw_marts"."mart_monthly_revenue__dbt_backup" cascade
+[0m02:22:37.888418 [debug] [Thread-4 (]: SQL status: ALTER TABLE in 0.001 seconds
+[0m02:22:37.890405 [debug] [Thread-1 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C9244490>]}
+[0m02:22:37.891405 [debug] [Thread-2 (]: SQL status: DROP TABLE in 0.001 seconds
+[0m02:22:37.894164 [debug] [Thread-4 (]: On model.sales_analytics.mart_sales_by_category: COMMIT
+[0m02:22:37.894164 [debug] [Thread-3 (]: SQL status: DROP TABLE in 0.003 seconds
+[0m02:22:37.895162 [info ] [Thread-1 (]: 5 of 5 OK created sql table model sales_dw_marts.mart_sales_by_region .......... [[32mSELECT 6[0m in 1.83s]
+[0m02:22:37.897164 [debug] [Thread-2 (]: On model.sales_analytics.mart_sales_by_channel: Close
+[0m02:22:37.898201 [debug] [Thread-4 (]: Using postgres connection "model.sales_analytics.mart_sales_by_category"
+[0m02:22:37.900201 [debug] [Thread-3 (]: On model.sales_analytics.mart_monthly_revenue: Close
+[0m02:22:37.901163 [debug] [Thread-1 (]: Finished running node model.sales_analytics.mart_sales_by_region
+[0m02:22:37.902163 [debug] [Thread-2 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8BEFE50>]}
+[0m02:22:37.902163 [debug] [Thread-4 (]: On model.sales_analytics.mart_sales_by_category: COMMIT
+[0m02:22:37.904164 [debug] [Thread-3 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8DF9A50>]}
+[0m02:22:37.905168 [info ] [Thread-2 (]: 4 of 5 OK created sql table model sales_dw_marts.mart_sales_by_channel ......... [[32mSELECT 4[0m in 1.84s]
+[0m02:22:37.909170 [debug] [Thread-4 (]: SQL status: COMMIT in 0.003 seconds
+[0m02:22:37.908171 [info ] [Thread-3 (]: 2 of 5 OK created sql table model sales_dw_marts.mart_monthly_revenue .......... [[32mSELECT 12[0m in 1.84s]
+[0m02:22:37.911164 [debug] [Thread-2 (]: Finished running node model.sales_analytics.mart_sales_by_channel
+[0m02:22:37.915167 [debug] [Thread-4 (]: Applying DROP to: "sales_warehouse"."sales_dw_marts"."mart_sales_by_category__dbt_backup"
+[0m02:22:37.915776 [debug] [Thread-3 (]: Finished running node model.sales_analytics.mart_monthly_revenue
+[0m02:22:37.917783 [debug] [Thread-4 (]: Using postgres connection "model.sales_analytics.mart_sales_by_category"
+[0m02:22:37.918745 [debug] [Thread-4 (]: On model.sales_analytics.mart_sales_by_category: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "model.sales_analytics.mart_sales_by_category"} */
+drop table if exists "sales_warehouse"."sales_dw_marts"."mart_sales_by_category__dbt_backup" cascade
+[0m02:22:37.919785 [debug] [Thread-4 (]: SQL status: DROP TABLE in 0.001 seconds
+[0m02:22:37.921782 [debug] [Thread-4 (]: On model.sales_analytics.mart_sales_by_category: Close
+[0m02:22:37.922787 [debug] [Thread-4 (]: Sending event: {'category': 'dbt', 'action': 'run_model', 'label': '1990fb32-bee2-4feb-abae-92b0bdea1ac8', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C9130390>]}
+[0m02:22:37.922787 [info ] [Thread-4 (]: 3 of 5 OK created sql table model sales_dw_marts.mart_sales_by_category ........ [[32mSELECT 7[0m in 1.86s]
+[0m02:22:37.925747 [debug] [Thread-4 (]: Finished running node model.sales_analytics.mart_sales_by_category
+[0m02:22:37.928747 [debug] [MainThread]: On master: COMMIT
+[0m02:22:37.930789 [debug] [MainThread]: Using postgres connection "master"
+[0m02:22:37.931746 [debug] [MainThread]: On master: COMMIT
+[0m02:22:37.931746 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m02:22:37.993200 [debug] [MainThread]: SQL status: COMMIT in 0.061 seconds
+[0m02:22:37.994303 [debug] [MainThread]: On master: Close
+[0m02:22:37.995296 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m02:22:37.995296 [debug] [MainThread]: Connection 'create_sales_warehouse_sales_dw_staging' was properly closed.
+[0m02:22:37.996302 [debug] [MainThread]: Connection 'create_sales_warehouse_sales_dw_marts' was properly closed.
+[0m02:22:37.996302 [debug] [MainThread]: Connection 'list_sales_warehouse_sales_dw_marts' was properly closed.
+[0m02:22:37.997344 [debug] [MainThread]: Connection 'list_sales_warehouse_sales_dw_staging' was properly closed.
+[0m02:22:37.998296 [debug] [MainThread]: Connection 'model.sales_analytics.mart_sales_by_region' was properly closed.
+[0m02:22:37.999330 [debug] [MainThread]: Connection 'model.sales_analytics.mart_monthly_revenue' was properly closed.
+[0m02:22:38.000330 [debug] [MainThread]: Connection 'model.sales_analytics.mart_sales_by_category' was properly closed.
+[0m02:22:38.001342 [debug] [MainThread]: Connection 'model.sales_analytics.mart_sales_by_channel' was properly closed.
+[0m02:22:38.002294 [info ] [MainThread]: 
+[0m02:22:38.002294 [info ] [MainThread]: Finished running 4 table models, 1 view model in 0 hours 0 minutes and 6.42 seconds (6.42s).
+[0m02:22:38.004331 [debug] [MainThread]: Command end result
+[0m02:22:38.043681 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\manifest.json
+[0m02:22:38.049652 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\semantic_manifest.json
+[0m02:22:38.057647 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\run_results.json
+[0m02:22:38.059774 [info ] [MainThread]: 
+[0m02:22:38.060745 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m02:22:38.061755 [info ] [MainThread]: 
+[0m02:22:38.062759 [info ] [MainThread]: Done. PASS=5 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=5
+[0m02:22:38.064755 [debug] [MainThread]: Command `dbt run` succeeded at 02:22:38.064755 after 12.83 seconds
+[0m02:22:38.065757 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C8BFEF50>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C0D31010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000002E0C0FB0410>]}
+[0m02:22:38.065757 [debug] [MainThread]: Flushing usage events
+[0m02:22:40.098904 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m02:26:26.223008 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6D651810>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6D650D10>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6D653E90>]}
+
+
+============================== 02:26:26.227014 | c4bcdd69-c691-4fda-82a6-b167f315400c ==============================
+[0m02:26:26.227014 [info ] [MainThread]: Running with dbt=1.11.8
+[0m02:26:26.227975 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'no_print': 'None', 'static_parser': 'True', 'target_path': 'None', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'write_json': 'True', 'introspect': 'True', 'log_cache_events': 'False', 'empty': 'None', 'cache_selected_only': 'False', 'fail_fast': 'False', 'debug': 'False', 'log_format': 'default', 'profiles_dir': '.', 'send_anonymous_usage_stats': 'True', 'quiet': 'False', 'warn_error': 'None', 'partial_parse': 'True', 'use_colors': 'True', 'indirect_selection': 'eager', 'invocation_command': 'dbt test --profiles-dir .', 'use_experimental_parser': 'False', 'log_path': 'C:\\Users\\DELL\\Documents\\Sales-Analytics-ETL-Pipeline\\dbt\\logs'}
+[0m02:26:26.534232 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'project_id', 'label': 'c4bcdd69-c691-4fda-82a6-b167f315400c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6E87DC50>]}
+[0m02:26:26.608463 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'adapter_info', 'label': 'c4bcdd69-c691-4fda-82a6-b167f315400c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE69DBF110>]}
+[0m02:26:26.609464 [info ] [MainThread]: Registered adapter: postgres=1.10.0
+[0m02:26:27.043762 [debug] [MainThread]: checksum: 7d524ac048c2100769df89d592e662e060a73ca564e31bd9c2a37efdfe8d8ab6, vars: {}, profile: , target: , version: 1.11.8
+[0m02:26:27.222955 [debug] [MainThread]: Partial parsing enabled: 0 files deleted, 0 files added, 0 files changed.
+[0m02:26:27.223953 [debug] [MainThread]: Nothing changed, skipping partial parsing.
+[0m02:26:27.224498 [debug] [MainThread]: Partial parsing enabled, no changes found, skipping parsing
+[0m02:26:27.278688 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'load_project', 'label': 'c4bcdd69-c691-4fda-82a6-b167f315400c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6EBAE2D0>]}
+[0m02:26:27.393877 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\manifest.json
+[0m02:26:27.397444 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\semantic_manifest.json
+[0m02:26:27.596923 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'resource_counts', 'label': 'c4bcdd69-c691-4fda-82a6-b167f315400c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6E7BEB10>]}
+[0m02:26:27.597885 [info ] [MainThread]: Found 5 models, 4 data tests, 1 source, 465 macros
+[0m02:26:27.598885 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'c4bcdd69-c691-4fda-82a6-b167f315400c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6E6EA150>]}
+[0m02:26:27.600923 [info ] [MainThread]: 
+[0m02:26:27.601887 [info ] [MainThread]: Concurrency: 4 threads (target='dev')
+[0m02:26:27.907345 [info ] [MainThread]: 
+[0m02:26:27.910348 [debug] [MainThread]: Acquiring new postgres connection 'master'
+[0m02:26:27.918345 [debug] [ThreadPool]: Acquiring new postgres connection 'list_sales_warehouse_sales_dw_marts'
+[0m02:26:27.921352 [debug] [ThreadPool]: Acquiring new postgres connection 'list_sales_warehouse_sales_dw_staging'
+[0m02:26:28.167768 [debug] [ThreadPool]: Using postgres connection "list_sales_warehouse_sales_dw_marts"
+[0m02:26:28.168772 [debug] [ThreadPool]: Using postgres connection "list_sales_warehouse_sales_dw_staging"
+[0m02:26:28.169766 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_marts: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "list_sales_warehouse_sales_dw_marts"} */
+select
+      'sales_warehouse' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'sales_dw_marts'
+    union all
+    select
+      'sales_warehouse' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'sales_dw_marts'
+    union all
+    select
+      'sales_warehouse' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'sales_dw_marts'
+  
+[0m02:26:28.171729 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_staging: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "list_sales_warehouse_sales_dw_staging"} */
+select
+      'sales_warehouse' as database,
+      tablename as name,
+      schemaname as schema,
+      'table' as type
+    from pg_tables
+    where schemaname ilike 'sales_dw_staging'
+    union all
+    select
+      'sales_warehouse' as database,
+      viewname as name,
+      schemaname as schema,
+      'view' as type
+    from pg_views
+    where schemaname ilike 'sales_dw_staging'
+    union all
+    select
+      'sales_warehouse' as database,
+      matviewname as name,
+      schemaname as schema,
+      'materialized_view' as type
+    from pg_matviews
+    where schemaname ilike 'sales_dw_staging'
+  
+[0m02:26:28.172816 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m02:26:28.174171 [debug] [ThreadPool]: Opening a new connection, currently in state init
+[0m02:26:28.293971 [debug] [ThreadPool]: SQL status: SELECT 1 in 0.119 seconds
+[0m02:26:28.294971 [debug] [ThreadPool]: SQL status: SELECT 4 in 0.122 seconds
+[0m02:26:28.297971 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_staging: ROLLBACK
+[0m02:26:28.301972 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_marts: ROLLBACK
+[0m02:26:28.304289 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_staging: Close
+[0m02:26:28.304948 [debug] [ThreadPool]: On list_sales_warehouse_sales_dw_marts: Close
+[0m02:26:28.320817 [debug] [MainThread]: Using postgres connection "master"
+[0m02:26:28.323354 [debug] [MainThread]: On master: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "connection_name": "master"} */
+select distinct
+        dependent_namespace.nspname as dependent_schema,
+        dependent_class.relname as dependent_name,
+        referenced_namespace.nspname as referenced_schema,
+        referenced_class.relname as referenced_name
+
+    -- Query for views: views are entries in pg_class with an entry in pg_rewrite, but we avoid
+    -- a seq scan on pg_rewrite by leveraging the fact there is an "internal" row in pg_depend for
+    -- the view...
+    from pg_class as dependent_class
+    join pg_namespace as dependent_namespace on dependent_namespace.oid = dependent_class.relnamespace
+    join pg_depend as dependent_depend on dependent_depend.refobjid = dependent_class.oid
+        and dependent_depend.classid = 'pg_rewrite'::regclass
+        and dependent_depend.refclassid = 'pg_class'::regclass
+        and dependent_depend.deptype = 'i'
+
+    -- ... and via pg_depend (that has a row per column, hence the need for "distinct" above, and
+    -- making sure to exclude the internal row to avoid a view appearing to depend on itself)...
+    join pg_depend as joining_depend on joining_depend.objid = dependent_depend.objid
+        and joining_depend.classid = 'pg_rewrite'::regclass
+        and joining_depend.refclassid = 'pg_class'::regclass
+        and joining_depend.refobjid != dependent_depend.refobjid
+
+    -- ... we can find the tables they query from in pg_class, but excluding system tables. Note we
+    -- don't need need to exclude _dependent_ system tables, because they only query from other
+    -- system tables, and so are automatically excluded by excluding _referenced_ system tables
+    join pg_class as referenced_class on referenced_class.oid = joining_depend.refobjid
+    join pg_namespace as referenced_namespace on referenced_namespace.oid = referenced_class.relnamespace
+        and referenced_namespace.nspname != 'information_schema'
+        and referenced_namespace.nspname not like 'pg\_%'
+
+    order by
+        dependent_schema, dependent_name, referenced_schema, referenced_name;
+[0m02:26:28.324330 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m02:26:28.429041 [debug] [MainThread]: SQL status: SELECT 1 in 0.104 seconds
+[0m02:26:28.432039 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'runnable_timing', 'label': 'c4bcdd69-c691-4fda-82a6-b167f315400c', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6E86C950>]}
+[0m02:26:28.433043 [debug] [MainThread]: On master: ROLLBACK
+[0m02:26:28.434043 [debug] [MainThread]: On master: COMMIT
+[0m02:26:28.434043 [debug] [MainThread]: Using postgres connection "master"
+[0m02:26:28.435042 [debug] [MainThread]: On master: COMMIT
+[0m02:26:28.436048 [debug] [MainThread]: SQL status: COMMIT in 0.000 seconds
+[0m02:26:28.437041 [debug] [MainThread]: On master: Close
+[0m02:26:28.448569 [debug] [Thread-1 (]: Began running node test.sales_analytics.not_null_stg_sales_category.368e4e308a
+[0m02:26:28.449567 [debug] [Thread-2 (]: Began running node test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8
+[0m02:26:28.450569 [debug] [Thread-3 (]: Began running node test.sales_analytics.not_null_stg_sales_transaction_id.803f091231
+[0m02:26:28.450569 [debug] [Thread-4 (]: Began running node test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec
+[0m02:26:28.451571 [info ] [Thread-1 (]: 1 of 4 START test not_null_stg_sales_category .................................. [RUN]
+[0m02:26:28.452572 [info ] [Thread-2 (]: 2 of 4 START test not_null_stg_sales_net_revenue_ghs ........................... [RUN]
+[0m02:26:28.455193 [info ] [Thread-3 (]: 3 of 4 START test not_null_stg_sales_transaction_id ............................ [RUN]
+[0m02:26:28.456318 [info ] [Thread-4 (]: 4 of 4 START test unique_stg_sales_transaction_id .............................. [RUN]
+[0m02:26:28.460090 [debug] [Thread-1 (]: Acquiring new postgres connection 'test.sales_analytics.not_null_stg_sales_category.368e4e308a'
+[0m02:26:28.462084 [debug] [Thread-2 (]: Acquiring new postgres connection 'test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8'
+[0m02:26:28.463084 [debug] [Thread-3 (]: Acquiring new postgres connection 'test.sales_analytics.not_null_stg_sales_transaction_id.803f091231'
+[0m02:26:28.464093 [debug] [Thread-4 (]: Acquiring new postgres connection 'test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec'
+[0m02:26:28.466095 [debug] [Thread-1 (]: Began compiling node test.sales_analytics.not_null_stg_sales_category.368e4e308a
+[0m02:26:28.467093 [debug] [Thread-2 (]: Began compiling node test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8
+[0m02:26:28.467093 [debug] [Thread-3 (]: Began compiling node test.sales_analytics.not_null_stg_sales_transaction_id.803f091231
+[0m02:26:28.468091 [debug] [Thread-4 (]: Began compiling node test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec
+[0m02:26:28.499618 [debug] [Thread-1 (]: Writing injected SQL for node "test.sales_analytics.not_null_stg_sales_category.368e4e308a"
+[0m02:26:28.505621 [debug] [Thread-2 (]: Writing injected SQL for node "test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8"
+[0m02:26:28.512140 [debug] [Thread-3 (]: Writing injected SQL for node "test.sales_analytics.not_null_stg_sales_transaction_id.803f091231"
+[0m02:26:28.519139 [debug] [Thread-4 (]: Writing injected SQL for node "test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec"
+[0m02:26:28.522141 [debug] [Thread-1 (]: Began executing node test.sales_analytics.not_null_stg_sales_category.368e4e308a
+[0m02:26:28.524153 [debug] [Thread-2 (]: Began executing node test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8
+[0m02:26:28.541139 [debug] [Thread-3 (]: Began executing node test.sales_analytics.not_null_stg_sales_transaction_id.803f091231
+[0m02:26:28.548138 [debug] [Thread-1 (]: Writing runtime sql for node "test.sales_analytics.not_null_stg_sales_category.368e4e308a"
+[0m02:26:28.548138 [debug] [Thread-4 (]: Began executing node test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec
+[0m02:26:28.553137 [debug] [Thread-2 (]: Writing runtime sql for node "test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8"
+[0m02:26:28.559082 [debug] [Thread-3 (]: Writing runtime sql for node "test.sales_analytics.not_null_stg_sales_transaction_id.803f091231"
+[0m02:26:28.562083 [debug] [Thread-4 (]: Writing runtime sql for node "test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec"
+[0m02:26:28.564094 [debug] [Thread-1 (]: Using postgres connection "test.sales_analytics.not_null_stg_sales_category.368e4e308a"
+[0m02:26:28.565110 [debug] [Thread-2 (]: Using postgres connection "test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8"
+[0m02:26:28.566097 [debug] [Thread-1 (]: On test.sales_analytics.not_null_stg_sales_category.368e4e308a: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "test.sales_analytics.not_null_stg_sales_category.368e4e308a"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select category
+from "sales_warehouse"."sales_dw_staging"."stg_sales"
+where category is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m02:26:28.567091 [debug] [Thread-2 (]: On test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select net_revenue_ghs
+from "sales_warehouse"."sales_dw_staging"."stg_sales"
+where net_revenue_ghs is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m02:26:28.567091 [debug] [Thread-3 (]: Using postgres connection "test.sales_analytics.not_null_stg_sales_transaction_id.803f091231"
+[0m02:26:28.568094 [debug] [Thread-4 (]: Using postgres connection "test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec"
+[0m02:26:28.569092 [debug] [Thread-1 (]: Opening a new connection, currently in state init
+[0m02:26:28.569092 [debug] [Thread-2 (]: Opening a new connection, currently in state init
+[0m02:26:28.570718 [debug] [Thread-3 (]: On test.sales_analytics.not_null_stg_sales_transaction_id.803f091231: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "test.sales_analytics.not_null_stg_sales_transaction_id.803f091231"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+
+
+select transaction_id
+from "sales_warehouse"."sales_dw_staging"."stg_sales"
+where transaction_id is null
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m02:26:28.572365 [debug] [Thread-4 (]: On test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec: /* {"app": "dbt", "dbt_version": "1.11.8", "profile_name": "sales_analytics", "target_name": "dev", "node_id": "test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec"} */
+
+    
+    select
+      count(*) as failures,
+      count(*) != 0 as should_warn,
+      count(*) != 0 as should_error
+    from (
+      
+    
+  
+    
+    
+
+select
+    transaction_id as unique_field,
+    count(*) as n_records
+
+from "sales_warehouse"."sales_dw_staging"."stg_sales"
+where transaction_id is not null
+group by transaction_id
+having count(*) > 1
+
+
+
+  
+  
+      
+    ) dbt_internal_test
+[0m02:26:28.574437 [debug] [Thread-3 (]: Opening a new connection, currently in state init
+[0m02:26:28.575435 [debug] [Thread-4 (]: Opening a new connection, currently in state init
+[0m02:26:28.683799 [debug] [Thread-2 (]: SQL status: SELECT 1 in 0.114 seconds
+[0m02:26:28.693633 [debug] [Thread-2 (]: On test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8: ROLLBACK
+[0m02:26:28.695637 [debug] [Thread-2 (]: On test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8: Close
+[0m02:26:28.699637 [debug] [Thread-3 (]: SQL status: SELECT 1 in 0.125 seconds
+[0m02:26:28.697636 [info ] [Thread-2 (]: 2 of 4 PASS not_null_stg_sales_net_revenue_ghs ................................. [[32mPASS[0m in 0.24s]
+[0m02:26:28.702643 [debug] [Thread-3 (]: On test.sales_analytics.not_null_stg_sales_transaction_id.803f091231: ROLLBACK
+[0m02:26:28.704749 [debug] [Thread-2 (]: Finished running node test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8
+[0m02:26:28.706786 [debug] [Thread-3 (]: On test.sales_analytics.not_null_stg_sales_transaction_id.803f091231: Close
+[0m02:26:28.709107 [info ] [Thread-3 (]: 3 of 4 PASS not_null_stg_sales_transaction_id .................................. [[32mPASS[0m in 0.25s]
+[0m02:26:28.712122 [debug] [Thread-3 (]: Finished running node test.sales_analytics.not_null_stg_sales_transaction_id.803f091231
+[0m02:26:28.724174 [debug] [Thread-1 (]: SQL status: SELECT 1 in 0.155 seconds
+[0m02:26:28.728384 [debug] [Thread-1 (]: On test.sales_analytics.not_null_stg_sales_category.368e4e308a: ROLLBACK
+[0m02:26:28.730379 [debug] [Thread-1 (]: On test.sales_analytics.not_null_stg_sales_category.368e4e308a: Close
+[0m02:26:28.733375 [info ] [Thread-1 (]: 1 of 4 PASS not_null_stg_sales_category ........................................ [[32mPASS[0m in 0.27s]
+[0m02:26:28.736381 [debug] [Thread-1 (]: Finished running node test.sales_analytics.not_null_stg_sales_category.368e4e308a
+[0m02:26:28.763411 [debug] [Thread-4 (]: SQL status: SELECT 1 in 0.188 seconds
+[0m02:26:28.767422 [debug] [Thread-4 (]: On test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec: ROLLBACK
+[0m02:26:28.768422 [debug] [Thread-4 (]: On test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec: Close
+[0m02:26:28.770459 [info ] [Thread-4 (]: 4 of 4 PASS unique_stg_sales_transaction_id .................................... [[32mPASS[0m in 0.31s]
+[0m02:26:28.775988 [debug] [Thread-4 (]: Finished running node test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec
+[0m02:26:28.778493 [debug] [MainThread]: On master: COMMIT
+[0m02:26:28.780504 [debug] [MainThread]: Using postgres connection "master"
+[0m02:26:28.781504 [debug] [MainThread]: On master: COMMIT
+[0m02:26:28.782506 [debug] [MainThread]: Opening a new connection, currently in state closed
+[0m02:26:28.855924 [debug] [MainThread]: SQL status: COMMIT in 0.074 seconds
+[0m02:26:28.856925 [debug] [MainThread]: On master: Close
+[0m02:26:28.857927 [debug] [MainThread]: Connection 'master' was properly closed.
+[0m02:26:28.858927 [debug] [MainThread]: Connection 'list_sales_warehouse_sales_dw_marts' was properly closed.
+[0m02:26:28.859928 [debug] [MainThread]: Connection 'list_sales_warehouse_sales_dw_staging' was properly closed.
+[0m02:26:28.860928 [debug] [MainThread]: Connection 'test.sales_analytics.not_null_stg_sales_category.368e4e308a' was properly closed.
+[0m02:26:28.862928 [debug] [MainThread]: Connection 'test.sales_analytics.not_null_stg_sales_net_revenue_ghs.e2441ae1b8' was properly closed.
+[0m02:26:28.863938 [debug] [MainThread]: Connection 'test.sales_analytics.not_null_stg_sales_transaction_id.803f091231' was properly closed.
+[0m02:26:28.864939 [debug] [MainThread]: Connection 'test.sales_analytics.unique_stg_sales_transaction_id.1bf73ef5ec' was properly closed.
+[0m02:26:28.865946 [info ] [MainThread]: 
+[0m02:26:28.867943 [info ] [MainThread]: Finished running 4 data tests in 0 hours 0 minutes and 0.96 seconds (0.96s).
+[0m02:26:28.869941 [debug] [MainThread]: Command end result
+[0m02:26:28.938561 [debug] [MainThread]: Wrote artifact WritableManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\manifest.json
+[0m02:26:28.943558 [debug] [MainThread]: Wrote artifact SemanticManifest to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\semantic_manifest.json
+[0m02:26:28.957459 [debug] [MainThread]: Wrote artifact RunExecutionResult to C:\Users\DELL\Documents\Sales-Analytics-ETL-Pipeline\dbt\target\run_results.json
+[0m02:26:28.958459 [info ] [MainThread]: 
+[0m02:26:28.959453 [info ] [MainThread]: [32mCompleted successfully[0m
+[0m02:26:28.961460 [info ] [MainThread]: 
+[0m02:26:28.962456 [info ] [MainThread]: Done. PASS=4 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=4
+[0m02:26:28.964469 [debug] [MainThread]: Command `dbt test` succeeded at 02:26:28.963456 after 2.85 seconds
+[0m02:26:28.964469 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE66841010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6E6EA990>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x000001FE6E6E8990>]}
+[0m02:26:28.966468 [debug] [MainThread]: Flushing usage events
+[0m02:26:31.000734 [debug] [MainThread]: An error was encountered while trying to flush usage events

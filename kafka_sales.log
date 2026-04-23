@@ -1,0 +1,42 @@
+2026-04-23 02:26:59,940 | INFO | SalesProducer | Producer started on topic 'sales.transactions.live' at 10 sales/sec
+2026-04-23 02:26:59,941 | INFO | RevenueConsumer | Consumer started — tracking high-value sales on partition 0
+2026-04-23 02:26:59,942 | INFO | MetricsConsumer | Consumer started — aggregating metrics on partition 1
+2026-04-23 02:26:59,942 | INFO | AuditConsumer | Consumer started — logging all sales to data\reports\sales_events_live.jsonl
+2026-04-23 02:27:03,578 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000037 | GHS 1,101.48 | Health & Beauty | In-Store
+2026-04-23 02:27:03,879 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000040 | GHS 629.74 | Home & Garden | In-Store
+2026-04-23 02:27:04,181 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000043 | GHS 1,657.31 | Groceries | In-Store
+2026-04-23 02:27:05,086 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000052 | GHS 606.66 | Home & Garden | Online
+2026-04-23 02:27:05,388 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000055 | GHS 680.13 | Clothing | In-Store
+2026-04-23 02:27:08,408 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000085 | GHS 535.67 | Home & Garden | Online
+2026-04-23 02:27:08,711 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000088 | GHS 919.41 | Sports | In-Store
+2026-04-23 02:27:09,918 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000100 | GHS 2,334.86 | Electronics | Online
+2026-04-23 02:27:10,823 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000109 | GHS 1,513.96 | Sports | Mobile App
+2026-04-23 02:27:11,124 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000112 | GHS 812.29 | Groceries | Online
+2026-04-23 02:27:14,142 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000142 | GHS 6,050.48 | Sports | In-Store
+2026-04-23 02:27:16,569 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000166 | GHS 899.39 | Home & Garden | Online
+2026-04-23 02:27:18,984 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000190 | GHS 872.70 | Groceries | In-Store
+2026-04-23 02:27:19,286 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000193 | GHS 588.14 | Home & Garden | Mobile App
+2026-04-23 02:27:19,890 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000199 | GHS 634.12 | Groceries | Online
+2026-04-23 02:27:23,210 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000232 | GHS 1,009.96 | Health & Beauty | Mobile App
+2026-04-23 02:27:23,512 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000235 | GHS 758.95 | Sports | In-Store
+2026-04-23 02:27:24,721 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000247 | GHS 2,209.79 | Sports | Online
+2026-04-23 02:27:26,533 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000265 | GHS 751.25 | Groceries | In-Store
+2026-04-23 02:27:26,835 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000268 | GHS 1,480.70 | Groceries | Online
+2026-04-23 02:27:28,949 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000289 | GHS 1,062.97 | Electronics | In-Store
+2026-04-23 02:27:30,457 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000304 | GHS 1,294.66 | Groceries | Mobile App
+2026-04-23 02:27:31,663 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000316 | GHS 544.40 | Electronics | In-Store
+2026-04-23 02:27:32,569 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000325 | GHS 1,557.57 | Home & Garden | Mobile App
+2026-04-23 02:27:33,173 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000331 | GHS 988.44 | Clothing | Online
+2026-04-23 02:27:34,379 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000343 | GHS 1,373.89 | Automotive | Online
+2026-04-23 02:27:36,793 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000367 | GHS 588.78 | Electronics | Online
+2026-04-23 02:27:38,301 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000382 | GHS 738.29 | Groceries | Online
+2026-04-23 02:27:40,414 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000403 | GHS 509.20 | Electronics | In-Store
+2026-04-23 02:27:41,622 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000415 | GHS 1,076.81 | Clothing | Mobile App
+2026-04-23 02:27:43,747 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000436 | GHS 643.85 | Sports | Online
+2026-04-23 02:27:45,258 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000451 | GHS 884.11 | Clothing | In-Store
+2026-04-23 02:27:47,677 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000475 | GHS 637.13 | Clothing | Online
+2026-04-23 02:27:51,005 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000508 | GHS 561.24 | Electronics | Online
+2026-04-23 02:27:52,212 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000520 | GHS 850.83 | Electronics | Mobile App
+2026-04-23 02:27:52,817 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000526 | GHS 699.41 | Sports | Online
+2026-04-23 02:27:53,119 | INFO | RevenueConsumer | HIGH VALUE SALE | SALE-LIVE-000000529 | GHS 781.62 | Home & Garden | Online
+2026-04-23 02:27:59,961 | INFO | SalesProducer | Producer finished — published 596 sales events

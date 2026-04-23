@@ -1,0 +1,27 @@
+version: 2
+
+sources:
+  - name: sales_dw
+    database: sales_warehouse
+    schema: sales_dw
+    tables:
+      - name: fact_sales
+        description: "Raw sales transactions loaded by ETL pipeline"
+
+models:
+  - name: stg_sales
+    description: "Staged and enriched sales transactions"
+    columns:
+      - name: transaction_id
+        description: "Unique transaction identifier"
+        tests:
+          - unique
+          - not_null
+      - name: net_revenue_ghs
+        description: "Net revenue after discount in GHS"
+        tests:
+          - not_null
+      - name: category
+        description: "Product category"
+        tests:
+          - not_null
