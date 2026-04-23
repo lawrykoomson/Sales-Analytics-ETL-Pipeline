@@ -1,159 +1,245 @@
-# 📊 Automated ETL Pipeline — Real-Time Sales Analytics
+# 🛒 Sales Analytics ETL Pipeline
 
-![Python](https://img.shields.io/badge/Python-3.14-blue?style=flat-square&logo=python)
-![Pandas](https://img.shields.io/badge/Pandas-3.0.2-150458?style=flat-square&logo=pandas)
-![SQLite](https://img.shields.io/badge/SQLite-Source_DB-003B57?style=flat-square&logo=sqlite)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-Warehouse-336791?style=flat-square&logo=postgresql)
-![Status](https://img.shields.io/badge/Status-Active-brightgreen?style=flat-square)
+![Python](https://img.shields.io/badge/Python-3.11-blue?style=flat-square&logo=python)
+![PostgreSQL](https://img.shields.io/badge/PostgreSQL-18-336791?style=flat-square&logo=postgresql)
+![dbt](https://img.shields.io/badge/dbt-1.11-FF694B?style=flat-square&logo=dbt)
+![PowerBI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat-square&logo=powerbi)
+![Tests](https://img.shields.io/badge/Tests-26%2F26%20Passing-brightgreen?style=flat-square)
+![Status](https://img.shields.io/badge/Status-Production%20Ready-brightgreen?style=flat-square)
 
-A complete 3-layer sales analytics system — data generation, ETL pipeline, and business intelligence reporting — processing **138,057 records** across **50,000 orders** from a realistic Ghana retail database.
+A production-grade sales analytics ETL pipeline that processes **25,000 retail transactions**, engineers revenue and profitability KPIs, and loads results into a live **PostgreSQL** warehouse — with a full **dbt analytical layer**, **Power BI dashboard**, **Airflow DAG**, and **Kafka stream simulator**.
 
-This is my **Final Year Project** at the University of Cape Coast, built to mirror production data engineering systems used by retail and fintech companies in Ghana.
+Built to mirror real retail analytics workflows used at **Hubtel Ghana**.
 
 ---
 
 ## 🏗️ System Architecture
 
 ```
-┌─────────────────────────────────────────────────────┐
-│  LAYER 1 — DATA SOURCE                              │
-│  SQLite Database (sales_database.db)                │
-│  • 500 customers  • 38 products  • 20 salespersons  │
-│  • 50,000 orders  • 87,499 order line items         │
-└──────────────────────┬──────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────┐
-│  LAYER 2 — ETL PIPELINE (etl_pipeline.py)           │
-│  Extract  → 5 tables from SQLite                    │
-│  Transform → join, clean, engineer KPIs, enrich     │
-│  Load     → PostgreSQL warehouse or CSV fallback    │
-└──────────────────────┬──────────────────────────────┘
-                       │
-                       ▼
-┌─────────────────────────────────────────────────────┐
-│  LAYER 3 — ANALYTICS REPORTS (analytics_report.py) │
-│  • Executive Summary    • Monthly Revenue           │
-│  • Top 10 Products      • Top Salespersons          │
-│  • Regional Revenue     • Payment Methods           │
-│  • Returns Analysis                                 │
-└─────────────────────────────────────────────────────┘
+[Retail Sales Data Source]
+           │
+           ▼
+     ┌───────────┐
+     │  EXTRACT  │  ← Generates 25,000 synthetic retail sales transactions
+     └───────────┘
+           │
+           ▼
+     ┌───────────┐
+     │ TRANSFORM │  ← Engineers revenue, profit, and discount KPIs
+     └───────────┘
+           │
+           ▼
+     ┌───────────┐
+     │   LOAD    │  ← PostgreSQL warehouse (sales_dw schema)
+     └───────────┘
+           │
+           ▼
+     ┌───────────┐
+     │    dbt    │  ← Analytical layer: 1 staging view + 4 mart tables
+     └───────────┘
+           │
+           ▼
+     ┌───────────┐
+     │  Power BI │  ← 4-page live dashboard connected to PostgreSQL
+     └───────────┘
+           │
+           ▼
+     ┌───────────┐
+     │   Kafka   │  ← Real-time sales stream: Producer + 3 Consumer Groups
+     └───────────┘
 ```
 
 ---
 
-## ✅ What The System Does
+## ✅ What The Pipeline Does
 
-### Layer 1 — Data Generator (`sales_data_generator.py`)
-- Creates a realistic Ghana retail SQLite database with 5 related tables
-- 500 Ghanaian customers across 7 regions and 20+ cities
-- 38 products across 6 categories (Electronics, Food, Clothing, Home, Health, Stationery)
-- 20 named Ghanaian salespersons with regional assignments
-- 50,000 orders with payment methods, statuses, and delivery regions
-- 87,499 order line items with quantities, unit prices, and discounts
+### Extract
+- Generates 25,000 realistic Ghana retail sales transactions
+- 7 product categories across 6 Ghana regions
+- 4 sales channels: In-Store, Online, Mobile App, Agent
+- 4 payment methods: MoMo, Cash, Card, Bank Transfer
 
-### Layer 2 — ETL Pipeline (`etl_pipeline.py`)
-- Extracts all 5 tables from SQLite source
-- Joins orders → items → customers → products → salespersons
-- Engineers financial KPIs: gross revenue, discounts, net revenue, COGS, gross profit, margin %
-- Builds time dimensions: year, month, quarter, day of week, hour, weekend flag
-- Flags high-value orders (top 10%), returns, and order size tiers
-- Loads into PostgreSQL warehouse or exports 3 CSV files as fallback
+### Transform — Business KPI Engineering
+Each transaction is enriched with:
 
-### Layer 3 — Analytics Reports (`analytics_report.py`)
-Generates 6 business intelligence reports:
-- Executive summary with all key metrics
-- Monthly revenue breakdown with margins
-- Top 10 products by net revenue and margin
-- Top salesperson performance rankings
-- Revenue and margin by delivery region
-- Payment method share analysis
-- Returns analysis by region
+| KPI | Formula |
+|---|---|
+| `gross_revenue_ghs` | unit_price × quantity |
+| `discount_amount_ghs` | gross_revenue × discount_pct |
+| `net_revenue_ghs` | gross_revenue − discount |
+| `cost_ghs` | net_revenue × random cost ratio (45–70%) |
+| `gross_profit_ghs` | net_revenue − cost |
+| `profit_margin_pct` | gross_profit / net_revenue × 100 |
+| `is_high_value` | net_revenue >= GHS 500 |
+| `revenue_tier` | Micro / Small / Medium / Large / Premium |
+
+### Load
+- Batch upserts into PostgreSQL (sales_dw schema)
+- Auto-falls back to CSV if database unavailable
 
 ---
 
-## 📊 Sample System Output
+## 🔁 dbt Analytical Layer
+
+5 models built on top of PostgreSQL:
+
+| Model | Type | Description |
+|---|---|---|
+| stg_sales | View | Cleaned transactions + time-of-day segments |
+| mart_sales_by_category | Table | Revenue and profit by product category |
+| mart_sales_by_region | Table | Revenue and profit by Ghana region |
+| mart_sales_by_channel | Table | Revenue and MoMo payments by channel |
+| mart_monthly_revenue | Table | 12-month revenue and profitability trend |
+
+```bash
+cd dbt
+dbt run --profiles-dir .    # Run all 5 models
+dbt test --profiles-dir .   # Run 4 data quality tests
+```
+
+---
+
+## 📊 Power BI Dashboard — 4 Pages
+
+Connected live to PostgreSQL via dbt mart tables:
+
+| Page | Key Metrics |
+|---|---|
+| Executive Summary | 25K transactions, GHS 9.42M revenue, GHS 4.01M profit, 42.53% margin |
+| Monthly Trends | 12-month revenue trend, 5,135 high value, 6,174 discounted |
+| Regional & Channel Analysis | Greater Accra 35.12%, In-Store leads channel revenue |
+| Product & Profitability | Groceries leads profit, Electronics leads margin |
+
+---
+
+## 🌊 Kafka Stream Simulator
+
+Real-time sales transaction streaming:
+
+```bash
+python kafka_sales_simulator.py
+```
 
 ```
-======================================================================
-   GHANA RETAIL SALES ANALYTICS — EXECUTIVE SUMMARY
-======================================================================
-  Reporting Period         : 01 Jan 2023 — 31 Dec 2024
-  Total Orders             : 50,000
-  Completed Orders         : 46,752
-  Unique Customers         : 500
-  Total Net Revenue        : GHS 78,632,142.16
-  Total Gross Profit       : GHS 25,757,758.24
-  Overall Profit Margin    : 32.8%
-  Average Order Value      : GHS 1,681.90
-  Total Discounts Given    : GHS 2,585,393.56
-  Returns                  : 2,225 orders (4.5%)
-----------------------------------------------------------------------
-  TOP SALESPERSON: Esi Tetteh — GHS 4,158,371.64
-  TOP PRODUCT:     Laptop (Electronics) — GHS 16,835,804.68
-  TOP REGION:      Northern — GHS 11,512,928.68
-======================================================================
+Topic          : sales.transactions.live
+Partitions     : 3
+Producer Rate  : 10 sales/sec
+Duration       : 60 seconds
+
+Producer        → generates live sales transaction events
+RevenueConsumer → tracks high-value transactions (partition 0)
+MetricsConsumer → aggregates real-time sales KPIs (partition 1)
+AuditConsumer   → logs all events to JSONL file (partition 2)
+
+Final Results:
+  Total Sales Produced   : 596
+  High Value Sales       : 37
+  Discounted Sales       : 56
+  Total Revenue Streamed : GHS 66,333.25
+  Total Profit Streamed  : GHS 27,710.79
+  Top Category           : Electronics
+  Top Channel            : In-Store
+  Top Region             : Greater Accra
+```
+
+---
+
+## 🧪 Unit Tests — 26/26 Passing
+
+```bash
+pytest test_sales_pipeline.py -v
+# 26 passed in 24.21s
+```
+
+| Test Class | Tests | Coverage |
+|---|---|---|
+| TestExtract | 10 | Row count, columns, valid values, uniqueness |
+| TestTransform | 11 | Revenue, profit, flags, time features |
+| TestIntegration | 5 | End-to-end, revenue totals, top category |
+
+---
+
+## 📋 Airflow DAG
+
+Scheduled pipeline at `dags/sales_pipeline_dag.py`:
+- Runs **every day at 03:00 AM UTC**
+- 5 tasks: extract, transform, load, dbt refresh, notify
+- XCom passes revenue and profit metrics between tasks
+- Email alerts on failure with 2 retries
+
+---
+
+## 📊 Sample Pipeline Output
+
+```
+====================================================================
+   SALES ANALYTICS ETL PIPELINE — RUN SUMMARY
+====================================================================
+  Total Transactions      : 25,000
+  Total Gross Revenue     : GHS 9,689,208.90
+  Total Net Revenue       : GHS 9,418,866.60
+  Total Gross Profit      : GHS 4,012,302.80
+  Avg Profit Margin       : 42.6%
+  High Value Transactions : 5,135
+  Discounted Transactions : 6,174
+--------------------------------------------------------------------
+  REVENUE BY CATEGORY:
+    Groceries            : GHS 2,420,465.47
+    Electronics          : GHS 1,810,851.31
+    Clothing             : GHS 1,377,364.66
+    Health & Beauty      : GHS 1,143,208.26
+    Home & Garden        : GHS 1,140,904.00
+    Sports               : GHS   930,156.05
+    Automotive           : GHS   595,916.85
+--------------------------------------------------------------------
+  REVENUE BY REGION:
+    Greater Accra        : GHS 3,307,942.96
+    Ashanti              : GHS 2,279,243.56
+    Western              : GHS 1,423,608.06
+    Eastern              : GHS 1,111,636.75
+    Northern             : GHS   804,488.67
+    Volta                : GHS   491,946.60
+====================================================================
 ```
 
 ---
 
 ## 🚀 How To Run
 
-### 1. Clone the repo
 ```bash
+# 1. Clone the repo
 git clone https://github.com/lawrykoomson/Sales-Analytics-ETL-Pipeline.git
 cd Sales-Analytics-ETL-Pipeline
-```
 
-### 2. Create virtual environment
-```bash
-python -m venv venv
-venv\Scripts\activate        # Windows
-source venv/bin/activate     # Mac/Linux
-```
+# 2. Create virtual environment with Python 3.11
+py -3.11 -m venv venv
+venv\Scripts\activate
 
-### 3. Install dependencies
-```bash
+# 3. Install dependencies
 pip install -r requirements.txt
-```
 
-### 4. Configure environment (optional)
-```bash
+# 4. Create PostgreSQL database
+psql -U postgres -c "CREATE DATABASE sales_warehouse;"
+
+# 5. Configure environment
 copy .env.example .env
 # Edit .env with your PostgreSQL credentials
-```
 
-### 5. Run the full system
-```bash
-python run_pipeline.py
-```
+# 6. Run the pipeline
+python etl_pipeline.py
 
-Or run each layer individually:
-```bash
-python sales_data_generator.py   # Layer 1 — Generate database
-python etl_pipeline.py           # Layer 2 — Run ETL
-python analytics_report.py       # Layer 3 — Generate reports
-```
+# 7. Run unit tests
+pytest test_sales_pipeline.py -v
 
----
+# 8. Run dbt models
+cd dbt
+set DBT_POSTGRES_PASSWORD=your_password
+dbt run --profiles-dir .
+dbt test --profiles-dir .
 
-## 📁 Output Files
-
-```
-data/
-├── raw/
-│   └── sales_database.db          ← SQLite source database
-├── processed/
-│   ├── fact_orders_*.csv          ← 50,000 enriched orders
-│   ├── fact_items_*.csv           ← 87,499 line items
-│   └── product_performance_*.csv  ← Product KPIs
-└── reports/
-    ├── monthly_revenue.csv
-    ├── top_products.csv
-    ├── salesperson_performance.csv
-    ├── regional_revenue.csv
-    ├── payment_methods.csv
-    └── returns_analysis.csv
+# 9. Run Kafka stream simulator
+cd ..
+python kafka_sales_simulator.py
 ```
 
 ---
@@ -162,23 +248,27 @@ data/
 
 | Tool | Purpose |
 |---|---|
-| Python 3.14 | Core pipeline language |
-| Pandas | Data transformation and KPI engineering |
-| NumPy | Numerical operations |
-| SQLite | Source database (data generation) |
-| psycopg2 | PostgreSQL warehouse connector |
-| Faker | Realistic Ghana data generation |
+| Python 3.11 | Core pipeline language |
+| Pandas | Data extraction and transformation |
+| NumPy | Numerical operations and KPI calculation |
+| psycopg2 | PostgreSQL database connector |
+| dbt-postgres | Analytical transformation layer |
+| Apache Airflow | Pipeline orchestration DAG |
+| Power BI | Sales analytics dashboard |
+| pytest | Unit testing framework |
 | python-dotenv | Environment variable management |
 
 ---
 
-## 🔮 Future Improvements
-- [ ] Apache Airflow DAG for daily scheduled pipeline runs
-- [ ] Power BI dashboard connected to PostgreSQL warehouse
-- [ ] Real-time order streaming with Apache Kafka
-- [ ] Predictive sales forecasting with Prophet / ARIMA
-- [ ] dbt models for analytical transformation layer
-- [ ] REST API to expose KPIs for dashboard consumption
+## 🔮 Roadmap
+
+- [x] ETL pipeline with PostgreSQL live load
+- [x] 26 unit tests — all passing
+- [x] dbt analytical layer — 5 models, 4 tests passing
+- [x] Apache Airflow DAG — daily scheduled runs
+- [x] Power BI dashboard — 4 pages live
+- [x] Kafka stream simulator — 3 consumer groups
+- [ ] Docker containerisation
 
 ---
 
@@ -186,5 +276,4 @@ data/
 
 **Lawrence Koomson**
 BSc. Information Technology — Data Engineering | University of Cape Coast, Ghana
-Final Year Project — 2025
 🔗 [LinkedIn](https://linkedin.com/in/lawrykoomson) | [GitHub](https://github.com/lawrykoomson)
